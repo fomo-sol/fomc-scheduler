@@ -7,10 +7,4 @@
 // })();
 
 // src/app.js
-const { fetchFomcMeetingDates } = require("./jobs/fetchFomcCalendar");
-
-(async () => {
-  const results = await fetchFomcMeetingDates();
-  console.log("📅 FOMC 일정 크롤링 결과:");
-  console.table(results);
-})();
+import "./cron/yearlyScheduler.js";
