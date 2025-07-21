@@ -1,17 +1,28 @@
-const {
-  getPendingMeetings,
-  updateMeetingStatus,
-} = require("../db/meetingModel");
-const { startPollingForDoc } = require("../jobs/pollFomc");
+import { getPendingMeetings, updateMeetingStatus } from "../db/meetingDates.js";
+import { startPollingForDoc } from "../jobs/pollFomc.js";
 
-async function runMeetingScheduler() {
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export async function runMeetingScheduler() {
   const meetings = await getPendingMeetings();
-  const today = new Date().toISOString().split("T")[0];
+  //   const today = new Date().toISOString().split("T")[0];
+
+  const mockNow = dayjs.tz("2025-06-18T14:00:00", "America/New_York");
+  const today = mockNow.format("YYYY-MM-DD");
+  const currentHourMinute = mockNow.format("HH:mm");
 
   for (const meeting of meetings) {
     const { statementDate, minutesDate, status } = meeting;
-
-    if (today === statementDate && status === "pending") {
+    console.log(today, statementDate, minutesDate, status, currentHourMinute);
+    const statementDay = dayjs(meeting.statementDate).format("YYYY-MM-DD");
+    const minutesDay = dayjs(meeting.minutesDate).format("YYYY-MM-DD");
+    console.log(statementDay, today);
+    if (today === statementDay && status === "pending") {
       // 미국 시간 오후 2시에 맞춰 polling 시작
       await startPollingForDoc("statement", statementDate);
       await startPollingForDoc("implementation_note", statementDate);
@@ -20,14 +31,10 @@ async function runMeetingScheduler() {
       return;
     }
 
-    if (today === minutesDate && status === "statement-fetched") {
+    if (today === minutesDay && status === "statement-fetched") {
       await startPollingForDoc("minutes", minutesDate);
       await updateMeetingStatus(statementDate, "done");
       return;
     }
   }
 }
-
-module.exports = {
-  runMeetingScheduler,
-};

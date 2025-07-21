@@ -2,7 +2,7 @@
 import axios from "axios";
 import path from "path";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import s3 from "../config/s3Config.js";
+import s3 from "../../../config/s3Config.js";
 
 async function uploadBufferToS3(buffer, s3Key, mimeType) {
   const command = new PutObjectCommand({

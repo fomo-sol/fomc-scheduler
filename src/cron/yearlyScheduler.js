@@ -1,10 +1,10 @@
 // src/cron/yearlyScheduler.js
-const cron = require("node-cron");
-const { fetchFomcMeetingDates } = require("../jobs/fetchFomcCalendar");
-const { saveMeetingsToDb } = require("../db/saveMeetingsToDb");
-const { scheduleMeetingJobs } = require("./meetingScheduler");
+import cron from "node-cron";
+import { fetchFomcMeetingDates } from "../jobs/fetchFomcCalendar.js";
+import { saveMeetingsToDb } from "../db/meetingDates.js";
+import { runMeetingScheduler } from "./meetingScheduler.js";
 
-const runYearlyFomcUpdate = async () => {
+export const runYearlyFomcUpdate = async () => {
   try {
     const meetings = await fetchFomcMeetingDates();
 
@@ -14,9 +14,9 @@ const runYearlyFomcUpdate = async () => {
     }
 
     await saveMeetingsToDb(meetings);
-    await scheduleMeetingJobs(meetings);
+    await runMeetingScheduler();
 
-    console.log(`✅ ${year}년 FOMC 회의 일정 업데이트 완료`);
+    console.log(`✅ 2025년 FOMC 회의 일정 업데이트 완료`);
   } catch (err) {
     console.error("❌ yearlyScheduler 에러:", err);
   }
@@ -28,6 +28,7 @@ cron.schedule("10 0 1 1 *", () => {
   runYearlyFomcUpdate();
 });
 
-module.exports = {
-  runYearlyFomcUpdate,
-};
+(async () => {
+  console.log("📆 최초 실행 일단 오늘 ㄱㄱ");
+  await runYearlyFomcUpdate();
+})();

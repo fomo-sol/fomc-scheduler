@@ -1,14 +1,14 @@
 // db/meetingDates.js
-import pool from "../config/db.js";
+// const pool = require("../config/db.js");
+import pool from "../../config/db.js"; // ES Module 버전
 
 // 📌 저장 함수
-export async function saveMeetingDates(meetings) {
+export async function saveMeetingsToDb(meetings) {
   const conn = await pool.getConnection();
   try {
     for (const meeting of meetings) {
       const { statementDate, minutesDate } = meeting;
 
-      // 중복 회피용 INSERT IGNORE
       await conn.query(
         `INSERT IGNORE INTO MeetingDates (statementDate, minutesDate, status)
          VALUES (?, ?, 'pending')`,
@@ -45,3 +45,5 @@ export async function updateMeetingStatus(id, status) {
     conn.release();
   }
 }
+
+// commonjs 모듈로 export

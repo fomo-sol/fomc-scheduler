@@ -1,5 +1,5 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import s3 from "../config/s3Config.js"; // export default S3Client
+import s3 from "../../../config/s3Config.js"; // export default S3Client
 import pdfParse from "pdf-parse";
 import * as cheerio from "cheerio";
 
@@ -102,20 +102,32 @@ async function uploadHtmlToS3(htmlContent, s3Key) {
 async function generateIndustryAnalysis(fullText) {
   const prompt = `You are a macroeconomic and industry analyst.
 
-Below is a summary of the latest FOMC meeting. Based on this content, generate a prediction for each of the following industries. For each industry, return:
+Below is a summary of the latest FOMC meeting. Based on this content, generate a prediction for each of the following sectors. For each sector, return:
 
-1. "industry": The industry name (as-is)
+1. "sector": The sector name
 2. "prediction": A concise message written in natural, user-friendly language. This should explain how the FOMC outcome may affect the sector.
-3. "risk": A number from 0 (very low risk) to 4 (very high risk), representing how sensitive this industry is to the FOMC outcome in the short term.
+3. "risk": A number from 0 (very low risk) to 4 (very high risk), representing how sensitive this sector is to the FOMC outcome in the short term.
 
 Instructions:
 - Your response must be in **pure JSON format** only. No explanations or text outside the JSON.
-- Use the following list of industries exactly as given.
-- Return an array of JSON objects (one per industry).
+- Use the following list of sectors exactly as given.
+- Return an array of JSON objects (one per sector).
 
-Industry list:
-[Insurance - Diversified, Auto Manufacturers, Aerospace & Defense, Computer Hardware, Medical Distribution, Biotechnology, Financial Data & Stock Exchanges]
-
+Sector list:
+[
+  "Financial Services",
+  "Consumer Cyclical",
+  "Industrials",
+  "Technology",
+  "Healthcare",
+  "Consumer Defensive",
+  "Utilities",
+  "Basic Materials",
+  "Real Estate",
+  "Communication Services",
+  "Energy"
+]
+  
 Write all content in **Korean**.
 
 FOMC summary:

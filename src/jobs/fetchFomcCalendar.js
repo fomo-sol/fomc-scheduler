@@ -1,8 +1,9 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
-const moment = require("moment");
+//module
+import axios from "axios";
+import * as cheerio from "cheerio";
+import moment from "moment";
 
-async function fetchFomcMeetingDates() {
+export async function fetchFomcMeetingDates() {
   const url = "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm";
   const res = await axios.get(url);
   const $ = cheerio.load(res.data);
@@ -49,7 +50,3 @@ async function fetchFomcMeetingDates() {
 
   return results;
 }
-
-module.exports = {
-  fetchFomcMeetingDates,
-};
