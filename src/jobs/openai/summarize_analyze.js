@@ -43,7 +43,7 @@ async function extractTextFromFile(buffer, contentType) {
 }
 
 // html 요약 생성하깅
-async function generateHtmlSummary(title, fullText) {
+async function generateHtmlSummary(title, fullText, type, date) {
   const prompt = `
 You are an expert analyst in the field of economics.
 
@@ -52,7 +52,8 @@ Below is the full text of an FOMC meeting transcript. Based on this document, ge
 **Instructions:**
 - Output only valid HTML. Do not include explanations, greetings, or commentary.
 - Use only the following HTML tags to structure the output: <h1>, <h2>, and <p>.
-- The <h1> tag should contain the overall meeting summary title (e.g., "Summary of the July 2025 FOMC Meeting").
+- The <h1> tag should contain the overall meeting summary title (e.g., "Summary of the ${date} FOMC ${type}").
+- Please ensure the date of the $fullText is ${date}, and the meeting type is ${type}.
 - The <h2> tags should represent 3 to 5 key topics, such as "Interest Rate Decision", "Inflation Outlook", "Labor Market", etc.
 - Each <h2> should be followed by a <p> tag containing **concise summary points using clear and short phrases or bullet-like wording** (avoid long paragraphs).
 - Focus on decisions, forecasts, and changes in economic stance.
@@ -99,8 +100,9 @@ async function uploadHtmlToS3(htmlContent, s3Key) {
   return url;
 }
 
-async function generateIndustryAnalysis(fullText) {
+async function generateIndustryAnalysis(fullText, date) {
   const prompt = `You are a macroeconomic and industry analyst.
+
 
 Below is a summary of the latest FOMC meeting. Based on this content, generate a prediction for each of the following sectors. For each sector, return:
 
@@ -161,18 +163,23 @@ async function uploadJsonToS3(data, s3Key) {
 }
 
 // 전체 파이프라인
-export async function summarizeAndUploadFomcFile(fomcId, originalS3Key) {
+export async function summarizeAndUploadFomcFile(
+  fomcId,
+  originalS3Key,
+  type,
+  date
+) {
   try {
     const { buffer, contentType } = await downloadFromS3(originalS3Key);
     const text = await extractTextFromFile(buffer, contentType);
     const title = `${fomcId} FOMC 회의 요약`;
-    const html = await generateHtmlSummary(title, text);
+    const html = await generateHtmlSummary(title, text, type, date);
     console.log(html);
     console.log(fomcId);
-    const htmlKey = `summaries/${fomcId}.html`;
+    const htmlKey = `summaries/${type}/${date}.html`;
     const url = await uploadHtmlToS3(html, htmlKey);
 
-    const industryAnalysis = await generateIndustryAnalysis(text);
+    const industryAnalysis = await generateIndustryAnalysis(text, date);
     const industryKey = `industry_analysis/${fomcId}.json`;
     const jsonurl = await uploadJsonToS3(industryAnalysis, industryKey);
 

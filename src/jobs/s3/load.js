@@ -17,7 +17,7 @@ async function uploadBufferToS3(buffer, s3Key, mimeType) {
   return { Location: url, result };
 }
 
-async function handleFomcFileUpload(id, link) {
+async function handleFomcFileUpload(id, link, type, date) {
   try {
     // 파일 받아서
     const response = await axios.get(link, { responseType: "arraybuffer" });
@@ -30,7 +30,7 @@ async function handleFomcFileUpload(id, link) {
       (contentType.includes("pdf") ? ".pdf" : ".html"); // 타입 찾아주고
 
     // 2. S3 key 설정 (예: fomc_files/{id}.pdf 또는 html)
-    const s3Key = `fomc_files/${id}${ext}`;
+    const s3Key = `fomc_files/${type}/${date}${ext}`;
 
     // 3. 업로드
     const { Location } = await uploadBufferToS3(buffer, s3Key, contentType);

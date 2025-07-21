@@ -57,8 +57,13 @@ export async function fetchAndProcessFomcDoc({ type, date, baseUrl }) {
 
     console.log(`✅ [${type}] DB 저장 완료`);
 
-    await handleFomcFileUpload(id, url); // S3 업로드 (html 저장)
-    await summarizeAndUploadFomcFile(id, `fomc_files/${id}.htm`);
+    await handleFomcFileUpload(id, url, type, date); // S3 업로드 (html 저장)
+    await summarizeAndUploadFomcFile(
+      id,
+      `fomc_files/${type}/${date}.htm`,
+      type,
+      date
+    );
 
     console.log(`🎉 [${type}] S3 업로드 및 OpenAI 분석 완료`);
     return true;
