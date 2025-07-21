@@ -34,12 +34,12 @@ export async function getPendingMeetings() {
 }
 
 // 📌 상태 갱신
-export async function updateMeetingStatus(id, status) {
+export async function updateMeetingStatus(statementDate, status) {
   const conn = await pool.getConnection();
   try {
     await conn.query(
-      `UPDATE MeetingDates SET status = ?, updated_at = NOW() WHERE id = ?`,
-      [status, id]
+      `UPDATE MeetingDates SET status = ?, updated_at = NOW() WHERE statementDate = ?`,
+      [status, statementDate]
     );
   } finally {
     conn.release();

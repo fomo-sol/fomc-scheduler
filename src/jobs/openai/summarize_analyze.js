@@ -1,6 +1,7 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import s3 from "../../../config/s3Config.js"; // export default S3Client
-import pdfParse from "pdf-parse";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
+
 import * as cheerio from "cheerio";
 
 import { OpenAI } from "openai";
@@ -28,11 +29,25 @@ async function downloadFromS3(s3Key) {
   return { buffer, contentType: response.ContentType };
 }
 
+async function extractTextFromPdf(buffer) {
+  const uint8Array = new Uint8Array(buffer); // ✅ 변환 필요
+  const loadingTask = pdfjsLib.getDocument({ data: uint8Array });
+  const pdf = await loadingTask.promise;
+  let textContent = "";
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    textContent += content.items.map((item) => item.str).join(" ");
+  }
+
+  return textContent.trim();
+}
 // 이거 pdf 도 하게 만들기
 async function extractTextFromFile(buffer, contentType) {
   if (contentType.includes("pdf")) {
-    const pdf = await pdfParse(buffer);
-    return pdf.text;
+    const pdft = await extractTextFromPdf(buffer);
+    return pdft;
   } else if (contentType.includes("html")) {
     const $ = cheerio.load(buffer.toString("utf-8"));
     const target = $("div.col-xs-12.col-sm-8.col-md-8");
@@ -111,7 +126,16 @@ Below is a summary of the latest FOMC meeting. Based on this content, generate a
 3. "risk": A number from 0 (very low risk) to 4 (very high risk), representing how sensitive this sector is to the FOMC outcome in the short term.
 
 Instructions:
-- Your response must be in **pure JSON format** only. No explanations or text outside the JSON.
+- Your response must be in **pure JSON format** only. No explanations or text outside the JSON. For example:
+'
+[
+  {
+    "sector": "Financial Services",
+    "prediction": "금융 서비스 부문은 금리 인상으로 인해 대출이 줄어들 것으로 예상됩니다.",
+    "risk": 3
+  },
+]
+'
 - Use the following list of sectors exactly as given.
 - Return an array of JSON objects (one per sector).
 

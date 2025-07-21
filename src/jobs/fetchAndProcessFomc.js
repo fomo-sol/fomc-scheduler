@@ -24,6 +24,40 @@ export async function fetchAndProcessFomcDoc({ type, date, baseUrl }) {
   console.log(`[📄 ${type}] ${url} 문서 요청 시작`);
 
   try {
+    if (type === "transcript") {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": getRandomUserAgent(),
+          "Accept-Language": "en-US,en;q=0.9",
+        },
+      });
+
+      if (!res.ok) {
+        console.log(`⚠️ [${type}] HTTP 오류: ${res.status}`);
+        return false;
+      }
+
+      const conn = await pool.getConnection();
+      await conn.query(
+        `INSERT INTO fomc_save (id, html_link, type) VALUES (?, ?, ?)`,
+        [id, url, type]
+      );
+      conn.release();
+
+      console.log(`✅ [${type}] DB 저장 완료`);
+
+      await handleFomcFileUpload(id, url, type, date); // S3 업로드 (html 저장)
+      await summarizeAndUploadFomcFile(
+        id,
+        `fomc_files/${type}/${date}.pdf`,
+        type,
+        date
+      );
+
+      console.log(`🎉 [${type}] S3 업로드 및 OpenAI 분석 완료`);
+      return true;
+    }
+
     const res = await fetch(url, {
       headers: {
         "User-Agent": getRandomUserAgent(),
