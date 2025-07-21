@@ -204,7 +204,7 @@ export async function summarizeAndUploadFomcFile(
     const url = await uploadHtmlToS3(html, htmlKey);
 
     const industryAnalysis = await generateIndustryAnalysis(text, date);
-    const industryKey = `industry_analysis/${fomcId}.json`;
+    const industryKey = `industry_analysis/${type}/${date}.json`;
     const jsonurl = await uploadJsonToS3(industryAnalysis, industryKey);
 
     console.log("✅ 요약 HTML 저장 완료:", url);
