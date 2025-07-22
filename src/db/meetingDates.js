@@ -25,7 +25,8 @@ export async function getPendingMeetings() {
   const conn = await pool.getConnection();
   try {
     const rows = await conn.query(
-      `SELECT * FROM MeetingDates WHERE status = 'pending'`
+      `SELECT * FROM MeetingDates`
+      // WHERE status = 'pending'
     );
     return rows;
   } finally {
