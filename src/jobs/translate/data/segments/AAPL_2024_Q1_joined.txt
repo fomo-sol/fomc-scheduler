@@ -1,0 +1,2765 @@
+aapl-20240330
+
+␟
+
+UNITED STATES
+
+␟
+
+SECURITIES AND EXCHANGE COMMISSION
+
+␟
+
+Washington, D.C. 20549
+
+␟
+
+FORM
+
+␟
+
+10-Q
+
+␟
+
+(Mark One)
+
+␟
+
+QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934
+
+␟
+
+For the quarterly period ended
+
+␟
+
+or
+
+␟
+
+TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934
+
+␟
+
+For the transition period from
+
+␟
+
+to
+
+␟
+
+Commission File Number:
+
+␟
+
+Apple Inc.
+
+␟
+
+(Exact name of Registrant as specified in its charter)
+
+␟
+
+California
+
+␟
+
+(State or other jurisdiction
+
+␟
+
+of incorporation or organization)
+
+␟
+
+(I.R.S. Employer Identification No.)
+
+␟
+
+One Apple Park Way
+
+␟
+
+Cupertino
+
+␟
+
+California
+
+␟
+
+(Address of principal executive offices)
+
+␟
+
+(Zip Code)
+
+␟
+
+Securities registered pursuant to Section 12(b) of the Act:
+
+␟
+
+Title of each class
+
+␟
+
+Trading symbol(s)
+
+␟
+
+Name of each exchange on which registered
+
+␟
+
+Common Stock, $0.00001 par value per share
+
+␟
+
+AAPL
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+0.000% Notes due 2025
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+0.875% Notes due 2025
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+1.625% Notes due 2026
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+2.000% Notes due 2027
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+1.375% Notes due 2029
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+3.050% Notes due 2029
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+0.500% Notes due 2031
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+3.600% Notes due 2042
+
+␟
+
+The Nasdaq Stock Market LLC
+
+␟
+
+Yes
+
+␟
+
+Yes
+
+␟
+
+Large accelerated filer
+
+␟
+
+Accelerated filer
+
+␟
+
+Non-accelerated filer
+
+␟
+
+Smaller reporting company
+
+␟
+
+Emerging growth company
+
+␟
+
+If an emerging growth company, indicate by check mark if the Registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.
+
+␟
+
+Indicate by check mark whether the Registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act).
+
+␟
+
+Apple Inc.
+
+␟
+
+Form 10-Q
+
+␟
+
+TABLE OF CONTENTS
+
+␟
+
+Page
+
+␟
+
+Part I
+
+␟
+
+Item 1.
+
+␟
+
+Financial Statements
+
+␟
+
+Item 2.
+
+␟
+
+Item 3.
+
+␟
+
+Quantitative and Qualitative Disclosures About Market Risk
+
+␟
+
+Item 4.
+
+␟
+
+Controls and Procedures
+
+␟
+
+Part II
+
+␟
+
+Item 1.
+
+␟
+
+Legal Proceedings
+
+␟
+
+Item 1A.
+
+␟
+
+Risk Factors
+
+␟
+
+Item 2.
+
+␟
+
+Unregistered Sales of Equity Securities and Use of Proceeds
+
+␟
+
+Item 3.
+
+␟
+
+Defaults Upon Senior Securities
+
+␟
+
+Item 4.
+
+␟
+
+Mine Safety Disclosures
+
+␟
+
+Item 5.
+
+␟
+
+Other Information
+
+␟
+
+Item 6.
+
+␟
+
+Exhibits
+
+␟
+
+Apple Inc.
+
+␟
+
+CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited)
+
+␟
+
+(In millions, except number of shares, which are reflected in thousands, and per-share amounts)
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Net sales:
+
+␟
+
+Total net sales
+
+␟
+
+Cost of sales:
+
+␟
+
+Total cost of sales
+
+␟
+
+Gross margin
+
+␟
+
+Operating expenses:
+
+␟
+
+Research and development
+
+␟
+
+Selling, general and administrative
+
+␟
+
+Total operating expenses
+
+␟
+
+Operating income
+
+␟
+
+Other income/(expense), net
+
+␟
+
+Income before provision for income taxes
+
+␟
+
+Provision for income taxes
+
+␟
+
+Net income
+
+␟
+
+Earnings per share:
+
+␟
+
+Basic
+
+␟
+
+Diluted
+
+␟
+
+Shares used in computing earnings per share:
+
+␟
+
+Basic
+
+␟
+
+Diluted
+
+␟
+
+See accompanying Notes to Condensed Consolidated Financial Statements.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 1
+
+␟
+
+Apple Inc.
+
+␟
+
+CONDENSED CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (Unaudited)
+
+␟
+
+(In millions)
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Net income
+
+␟
+
+Other comprehensive income/(loss):
+
+␟
+
+Change in foreign currency translation, net of tax
+
+␟
+
+Change in unrealized gains/losses on derivative instruments, net of tax:
+
+␟
+
+Change in fair value of derivative instruments
+
+␟
+
+Adjustment for net (gains)/losses realized and included in net income
+
+␟
+
+Total change in unrealized gains/losses on derivative instruments
+
+␟
+
+Change in unrealized gains/losses on marketable debt securities, net of tax:
+
+␟
+
+Change in fair value of marketable debt securities
+
+␟
+
+Adjustment for net (gains)/losses realized and included in net income
+
+␟
+
+Total change in unrealized gains/losses on marketable debt securities
+
+␟
+
+Total other comprehensive income/(loss)
+
+␟
+
+Total comprehensive income
+
+␟
+
+See accompanying Notes to Condensed Consolidated Financial Statements.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 2
+
+␟
+
+Apple Inc.
+
+␟
+
+CONDENSED CONSOLIDATED BALANCE SHEETS (Unaudited)
+
+␟
+
+(In millions, except number of shares, which are reflected in thousands, and par value)
+
+␟
+
+March 30,
+
+␟
+
+September 30,
+
+␟
+
+ASSETS:
+
+␟
+
+Current assets:
+
+␟
+
+Cash and cash equivalents
+
+␟
+
+Marketable securities
+
+␟
+
+Accounts receivable, net
+
+␟
+
+Vendor non-trade receivables
+
+␟
+
+Inventories
+
+␟
+
+Other current assets
+
+␟
+
+Total current assets
+
+␟
+
+Non-current assets:
+
+␟
+
+Marketable securities
+
+␟
+
+Property, plant and equipment, net
+
+␟
+
+Other non-current assets
+
+␟
+
+Total non-current assets
+
+␟
+
+Total assets
+
+␟
+
+Current liabilities:
+
+␟
+
+Accounts payable
+
+␟
+
+Other current liabilities
+
+␟
+
+Deferred revenue
+
+␟
+
+Commercial paper
+
+␟
+
+Term debt
+
+␟
+
+Total current liabilities
+
+␟
+
+Non-current liabilities:
+
+␟
+
+Term debt
+
+␟
+
+Other non-current liabilities
+
+␟
+
+Total non-current liabilities
+
+␟
+
+Total liabilities
+
+␟
+
+Commitments and contingencies
+
+␟
+
+Common stock and additional paid-in capital, $
+
+␟
+
+par value:
+
+␟
+
+shares authorized;
+
+␟
+
+and
+
+␟
+
+shares issued and outstanding, respectively
+
+␟
+
+Retained earnings/(Accumulated deficit)
+
+␟
+
+Accumulated other comprehensive loss
+
+␟
+
+See accompanying Notes to Condensed Consolidated Financial Statements.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 3
+
+␟
+
+Apple Inc.
+
+␟
+
+(In millions, except per-share amounts)
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Common stock and additional paid-in capital:
+
+␟
+
+Beginning balances
+
+␟
+
+Common stock issued
+
+␟
+
+Common stock withheld related to net share settlement of equity awards
+
+␟
+
+Share-based compensation
+
+␟
+
+Ending balances
+
+␟
+
+Retained earnings/(Accumulated deficit):
+
+␟
+
+Beginning balances
+
+␟
+
+Net income
+
+␟
+
+Dividends and dividend equivalents declared
+
+␟
+
+Common stock withheld related to net share settlement of equity awards
+
+␟
+
+Common stock repurchased
+
+␟
+
+Ending balances
+
+␟
+
+Accumulated other comprehensive income/(loss):
+
+␟
+
+Beginning balances
+
+␟
+
+Other comprehensive income/(loss)
+
+␟
+
+Ending balances
+
+␟
+
+Dividends and dividend equivalents declared per share or RSU
+
+␟
+
+See accompanying Notes to Condensed Consolidated Financial Statements.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 4
+
+␟
+
+Apple Inc.
+
+␟
+
+CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (Unaudited)
+
+␟
+
+(In millions)
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Cash, cash equivalents and restricted cash, beginning balances
+
+␟
+
+Operating activities:
+
+␟
+
+Net income
+
+␟
+
+Adjustments to reconcile net income to cash generated by operating activities:
+
+␟
+
+Depreciation and amortization
+
+␟
+
+Share-based compensation expense
+
+␟
+
+Other
+
+␟
+
+Changes in operating assets and liabilities:
+
+␟
+
+Accounts receivable, net
+
+␟
+
+Vendor non-trade receivables
+
+␟
+
+Inventories
+
+␟
+
+Other current and non-current assets
+
+␟
+
+Accounts payable
+
+␟
+
+Other current and non-current liabilities
+
+␟
+
+Cash generated by operating activities
+
+␟
+
+Investing activities:
+
+␟
+
+Purchases of marketable securities
+
+␟
+
+Proceeds from maturities of marketable securities
+
+␟
+
+Proceeds from sales of marketable securities
+
+␟
+
+Payments for acquisition of property, plant and equipment
+
+␟
+
+Other
+
+␟
+
+Cash generated by investing activities
+
+␟
+
+Financing activities:
+
+␟
+
+Payments for taxes related to net share settlement of equity awards
+
+␟
+
+Payments for dividends and dividend equivalents
+
+␟
+
+Repurchases of common stock
+
+␟
+
+Repayments of term debt
+
+␟
+
+Repayments of commercial paper, net
+
+␟
+
+Other
+
+␟
+
+Cash used in financing activities
+
+␟
+
+Increase in cash, cash equivalents and restricted cash
+
+␟
+
+Cash, cash equivalents and restricted cash, ending balances
+
+␟
+
+Supplemental cash flow disclosure:
+
+␟
+
+Cash paid for income taxes, net
+
+␟
+
+See accompanying Notes to Condensed Consolidated Financial Statements.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 5
+
+␟
+
+Apple Inc.
+
+␟
+
+Notes to Condensed Consolidated Financial Statements (Unaudited)
+
+␟
+
+Summary of Significant Accounting Policies
+
+␟
+
+Basis of Presentation and Preparation
+
+␟
+
+Revenue
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+iPhone
+
+␟
+
+Mac
+
+␟
+
+iPad
+
+␟
+
+Wearables, Home and Accessories
+
+␟
+
+Services
+
+␟
+
+Total net sales
+
+␟
+
+Total net sales include $
+
+␟
+
+, $
+
+␟
+
+billion
+
+␟
+
+billion and $
+
+␟
+
+% of total deferred revenue to be realized in less than a year,
+
+␟
+
+% within one-to-two years,
+
+␟
+
+% within two-to-three years and
+
+␟
+
+% in greater than three years.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 6
+
+␟
+
+Earnings Per Share
+
+␟
+
+The following table shows the computation of basic and diluted earnings per share for the three- and six-month periods ended March 30, 2024 and April 1, 2023 (net income in millions and shares in thousands):
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Numerator:
+
+␟
+
+Net income
+
+␟
+
+Denominator:
+
+␟
+
+Weighted-average basic shares outstanding
+
+␟
+
+Effect of dilutive share-based awards
+
+␟
+
+Weighted-average diluted shares
+
+␟
+
+Basic earnings per share
+
+␟
+
+Diluted earnings per share
+
+␟
+
+Approximately
+
+␟
+
+Financial Instruments
+
+␟
+
+Cash, Cash Equivalents and Marketable Securities
+
+␟
+
+March 30, 2024
+
+␟
+
+Adjusted
+
+␟
+
+Cost
+
+␟
+
+Unrealized
+
+␟
+
+Gains
+
+␟
+
+Unrealized
+
+␟
+
+Losses
+
+␟
+
+Fair
+
+␟
+
+Value
+
+␟
+
+Cash and
+
+␟
+
+Cash
+
+␟
+
+Equivalents
+
+␟
+
+Current
+
+␟
+
+Marketable
+
+␟
+
+Securities
+
+␟
+
+Non-Current
+
+␟
+
+Marketable
+
+␟
+
+Securities
+
+␟
+
+Cash
+
+␟
+
+Level 1:
+
+␟
+
+Money market funds
+
+␟
+
+Mutual funds
+
+␟
+
+Subtotal
+
+␟
+
+Level 2
+
+␟
+
+U.S. Treasury securities
+
+␟
+
+U.S. agency securities
+
+␟
+
+Non-U.S. government securities
+
+␟
+
+Certificates of deposit and time deposits
+
+␟
+
+Commercial paper
+
+␟
+
+Corporate debt securities
+
+␟
+
+Municipal securities
+
+␟
+
+Mortgage- and asset-backed securities
+
+␟
+
+Subtotal
+
+␟
+
+Total
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 7
+
+␟
+
+September 30, 2023
+
+␟
+
+Adjusted
+
+␟
+
+Cost
+
+␟
+
+Unrealized
+
+␟
+
+Gains
+
+␟
+
+Unrealized
+
+␟
+
+Losses
+
+␟
+
+Fair
+
+␟
+
+Value
+
+␟
+
+Cash and
+
+␟
+
+Cash
+
+␟
+
+Equivalents
+
+␟
+
+Current
+
+␟
+
+Marketable
+
+␟
+
+Securities
+
+␟
+
+Non-Current
+
+␟
+
+Marketable
+
+␟
+
+Securities
+
+␟
+
+Cash
+
+␟
+
+Level 1:
+
+␟
+
+Money market funds
+
+␟
+
+Mutual funds and equity securities
+
+␟
+
+Subtotal
+
+␟
+
+Level 2
+
+␟
+
+U.S. Treasury securities
+
+␟
+
+U.S. agency securities
+
+␟
+
+Non-U.S. government securities
+
+␟
+
+Certificates of deposit and time deposits
+
+␟
+
+Commercial paper
+
+␟
+
+Corporate debt securities
+
+␟
+
+Municipal securities
+
+␟
+
+Mortgage- and asset-backed securities
+
+␟
+
+Subtotal
+
+␟
+
+Total
+
+␟
+
+billion, respectively, that were restricted from general use, related to the European Commission decision finding that Ireland granted state aid to the Company, and other agreements.
+
+␟
+
+Due after 1 year through 5 years
+
+␟
+
+Due after 5 years through 10 years
+
+␟
+
+Due after 10 years
+
+␟
+
+Total fair value
+
+␟
+
+Derivative Instruments and Hedging
+
+␟
+
+The Company may use derivative instruments to partially offset its business exposure to foreign exchange and interest rate risk. However, the Company may choose not to hedge certain exposures for a variety of reasons, including accounting considerations or the prohibitive economic cost of hedging particular exposures. There can be no assurance the hedges will offset more than a portion of the financial impact resulting from movements in foreign exchange or interest rates.
+
+␟
+
+Foreign Exchange Rate Risk
+
+␟
+
+To protect gross margins from fluctuations in foreign exchange rates, the Company may use forwards, options or other instruments, and may designate these instruments as cash flow hedges. The Company generally hedges portions of its forecasted foreign currency exposure associated with revenue and inventory purchases, typically for up to
+
+␟
+
+months.
+
+␟
+
+years.
+
+␟
+
+The Company may also use derivative instruments that are not designated as accounting hedges to protect gross margins from certain fluctuations in foreign exchange rates, as well as to offset a portion of the foreign currency gains and losses generated by the remeasurement of certain assets and liabilities denominated in non-functional currencies.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 8
+
+␟
+
+Interest Rate Risk
+
+␟
+
+March 30,
+
+␟
+
+September 30,
+
+␟
+
+Derivative instruments designated as accounting hedges:
+
+␟
+
+Foreign exchange contracts
+
+␟
+
+Interest rate contracts
+
+␟
+
+Derivative instruments not designated as accounting hedges:
+
+␟
+
+Foreign exchange contracts
+
+␟
+
+March 30,
+
+␟
+
+September 30,
+
+␟
+
+Hedged assets/(liabilities):
+
+␟
+
+Current and non-current marketable securities
+
+␟
+
+Current and non-current term debt
+
+␟
+
+Accounts Receivable
+
+␟
+
+Trade Receivables
+
+␟
+
+% and
+
+␟
+
+Vendor Non-Trade Receivables
+
+␟
+
+two
+
+␟
+
+vendors that individually represented 10% or more of total vendor non-trade receivables, which accounted f
+
+␟
+
+or
+
+␟
+
+% and
+
+␟
+
+%. A
+
+␟
+
+two
+
+␟
+
+vendors that individually represented 10% or more of total vendor non-trade receivables, which accounted for
+
+␟
+
+% and
+
+␟
+
+%.
+
+␟
+
+Condensed Consolidated Financial Statement Details
+
+␟
+
+Property, Plant and Equipment, Net
+
+␟
+
+March 30,
+
+␟
+
+September 30,
+
+␟
+
+Gross property, plant and equipment
+
+␟
+
+Accumulated depreciation
+
+␟
+
+Total property, plant and equipment, net
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 9
+
+␟
+
+Debt
+
+␟
+
+Commercial Paper
+
+␟
+
+billion and $
+
+␟
+
+billion of commercial paper outstanding, respectively.
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Maturities 90 days or less:
+
+␟
+
+Repayments of commercial paper, net
+
+␟
+
+Maturities greater than 90 days:
+
+␟
+
+Repayments of commercial paper
+
+␟
+
+Total repayments of commercial paper, net
+
+␟
+
+Term Debt
+
+␟
+
+billion
+
+␟
+
+and $
+
+␟
+
+billion and $
+
+␟
+
+billion, respectively.
+
+␟
+
+Share Repurchase Program
+
+␟
+
+million shares of its common stock for $
+
+␟
+
+Share-Based Compensation
+
+␟
+
+Restricted Stock Units
+
+␟
+
+Number of
+
+␟
+
+RSUs
+
+␟
+
+(in thousands)
+
+␟
+
+Weighted-Average
+
+␟
+
+Grant Date Fair
+
+␟
+
+Value Per RSU
+
+␟
+
+Aggregate
+
+␟
+
+Fair Value
+
+␟
+
+(in millions)
+
+␟
+
+Balance as of September 30, 2023
+
+␟
+
+RSUs granted
+
+␟
+
+RSUs vested
+
+␟
+
+RSUs canceled
+
+␟
+
+Balance as of March 30, 2024
+
+␟
+
+The fair value as of the respective vesting dates of RSUs was
+
+␟
+
+million
+
+␟
+
+an
+
+␟
+
+d $
+
+␟
+
+billion for
+
+␟
+
+the three- and six-month periods ended March 30, 2024, respectively, and was $
+
+␟
+
+billion and $
+
+␟
+
+billion for the three- and six-month periods ended April 1, 2023, respectively.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 10
+
+␟
+
+Share-Based Compensation
+
+␟
+
+The following table shows share-based compensation expense and the related income tax benefit included in the Condensed Consolidated Statements of Operations for the three- and six-month periods ended March 30, 2024 and April 1, 2023 (in millions):
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Share-based compensation expense
+
+␟
+
+Income tax benefit related to share-based compensation expense
+
+␟
+
+billion, which the Company expects to recognize over a weighted-average period of
+
+␟
+
+years.
+
+␟
+
+Contingencies
+
+␟
+
+The Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. The outcome of litigation is inherently uncertain. In the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims.
+
+␟
+
+Segment Information and Geographic Data
+
+␟
+
+The following table shows information by reportable segment for the three- and six-month periods ended March 30, 2024 and April 1, 2023 (in millions):
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Americas:
+
+␟
+
+Net sales
+
+␟
+
+Operating income
+
+␟
+
+Europe:
+
+␟
+
+Net sales
+
+␟
+
+Operating income
+
+␟
+
+Greater China:
+
+␟
+
+Net sales
+
+␟
+
+Operating income
+
+␟
+
+Japan:
+
+␟
+
+Net sales
+
+␟
+
+Operating income
+
+␟
+
+Rest of Asia Pacific:
+
+␟
+
+Net sales
+
+␟
+
+Operating income
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 11
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Segment operating income
+
+␟
+
+Research and development expense
+
+␟
+
+Other corporate expenses, net
+
+␟
+
+Total operating income
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 12
+
+␟
+
+Available Information
+
+␟
+
+Business Seasonality and Product Introductions
+
+␟
+
+During the second quarter of 2024, the Company announced an updated MacBook Air
+
+␟
+
+13-in. and MacBook Air 15-in.
+
+␟
+
+Fiscal Period
+
+␟
+
+Macroeconomic Conditions
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 13
+
+␟
+
+Segment Operating Performance
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Change
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Change
+
+␟
+
+Net sales by reportable segment:
+
+␟
+
+Americas
+
+␟
+
+Europe
+
+␟
+
+Greater China
+
+␟
+
+Japan
+
+␟
+
+Rest of Asia Pacific
+
+␟
+
+Total net sales
+
+␟
+
+Americas
+
+␟
+
+Americas net sales were relatively flat during the second quarter of 2024 compared to the second quarter of 2023, with lower net sales of iPhone and iPad offset by higher net sales of Services. Year-over-year Americas net sales were relatively flat during the first six months of 2024, with higher net sales of Services offset by lower net sales of iPhone and iPad. The strength in foreign currencies relative to the U.S. dollar had a net favorable year-over-year impact on Americas net sales during the second quarter and first six months of 2024.
+
+␟
+
+Europe
+
+␟
+
+Europe net sales were relatively flat during the second quarter of 2024 compared to the second quarter of 2023, with higher net sales of Services offset by lower net sales of iPhone. The weakness in foreign currencies relative to the U.S. dollar had a net unfavorable year-over-year impact on Europe net sales during the second quarter of 2024. Year-over-year Europe net sales increased during the first six months of 2024 due primarily to higher net sales of iPhone and Services, partially offset by lower net sales of iPad.
+
+␟
+
+Greater China
+
+␟
+
+Greater China net sales decreased during the second quarter and first six months of 2024 compared to the same periods in 2023 due primarily to lower net sales of iPhone and iPad. The weakness in the renminbi relative to the U.S. dollar had an unfavorable year-over-year impact on Greater China net sales during the second quarter and first six months of 2024.
+
+␟
+
+Japan
+
+␟
+
+Japan net sales decreased during the second quarter of 2024 compared to the second quarter of 2023 due primarily to lower net sales of iPhone. Year-over-year Japan net sales during the first six months of 2024 were relatively flat. The weakness in the yen relative to the U.S. dollar had an unfavorable year-over-year impact on Japan net sales during the second quarter and first six months of 2024.
+
+␟
+
+Rest of Asia Pacific
+
+␟
+
+Rest of Asia Pacific net sales decreased during the second quarter of 2024 compared to the second quarter of 2023 due primarily to lower net sales of iPhone. Year-over-year Rest of Asia Pacific net sales decreased during the first six months of 2024 due primarily to lower net sales of Wearables, Home and Accessories and iPad.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 14
+
+␟
+
+Products and Services Performance
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Change
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Change
+
+␟
+
+Net sales by category:
+
+␟
+
+iPhone
+
+␟
+
+Mac
+
+␟
+
+iPad
+
+␟
+
+Wearables, Home and Accessories
+
+␟
+
+Services
+
+␟
+
+Total net sales
+
+␟
+
+iPhone
+
+␟
+
+iPhone net sales decreased during the second quarter of 2024 compared to the second quarter of 2023 due to lower net sales of Pro models. Year-over-year iPhone net sales were relatively flat during the first six months of 2024.
+
+␟
+
+Mac
+
+␟
+
+Mac net sales increased during the second quarter and first six months of 2024 compared to the same periods in 2023 due to higher net sales of laptops.
+
+␟
+
+iPad
+
+␟
+
+iPad net sales decreased during the second quarter and first six months of 2024 compared to the same periods in 2023 due primarily to lower net sales of iPad Pro
+
+␟
+
+and iPad 9th generation.
+
+␟
+
+Wearables, Home and Accessories
+
+␟
+
+Wearables, Home and Accessories net sales decreased during the second quarter and first six months of 2024 compared to the same periods in 2023 due primarily to lower net sales of Wearables and Accessories.
+
+␟
+
+Services
+
+␟
+
+Services net sales increased during the second quarter and first six months of 2024 compared to the same periods in 2023 due primarily to higher net sales from advertising, the App Store
+
+␟
+
+and cloud services.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 15
+
+␟
+
+Gross Margin
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Gross margin:
+
+␟
+
+Products
+
+␟
+
+Services
+
+␟
+
+Total gross margin
+
+␟
+
+Gross margin percentage:
+
+␟
+
+Products
+
+␟
+
+Services
+
+␟
+
+Total gross margin percentage
+
+␟
+
+Products Gross Margin
+
+␟
+
+Products gross margin decreased during the second quarter of 2024 compared to the second quarter of 2023 due primarily to lower Products volume and the weakness in foreign currencies relative to the U.S. dollar. Year-over-year Products gross margin was relatively flat during the first six months of 2024.
+
+␟
+
+Products gross margin percentage was relatively flat during the second quarter of 2024 compared to the second quarter of 2023. Year-over-year Products gross margin percentage increased during the first six months of 2024 due primarily to cost savings, partially offset by the weakness in foreign currencies relative to the U.S. dollar.
+
+␟
+
+Services Gross Margin
+
+␟
+
+Services gross margin and Services gross margin percentage increased during the second quarter and first six months of 2024 compared to the same periods in 2023 due primarily to a different Services mix.
+
+␟
+
+Operating Expenses
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Research and development
+
+␟
+
+Percentage of total net sales
+
+␟
+
+Selling, general and administrative
+
+␟
+
+Percentage of total net sales
+
+␟
+
+Total operating expenses
+
+␟
+
+Percentage of total net sales
+
+␟
+
+Research and Development
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 16
+
+␟
+
+Selling, General and Administrative
+
+␟
+
+The growth in selling, general and administrative expense during the second quarter and first six months of 2024 compared to the same periods in 2023 was driven in part by higher infrastructure-related costs.
+
+␟
+
+Provision for Income Taxes
+
+␟
+
+Three Months Ended
+
+␟
+
+Six Months Ended
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+March 30,
+
+␟
+
+April 1,
+
+␟
+
+Provision for income taxes
+
+␟
+
+Effective tax rate
+
+␟
+
+Statutory federal income tax rate
+
+␟
+
+Liquidity and Capital Resources
+
+␟
+
+The Company believes its balances of cash, cash equivalents and unrestricted marketable securities, along with cash generated by ongoing operations and continued access to debt markets, will be sufficient to satisfy its cash requirements and capital return program over the next 12 months and beyond.
+
+␟
+
+Manufacturing Purchase Obligations
+
+␟
+
+Capital Return Program
+
+␟
+
+During the second quarter of 2024, the Company repurchased $23.5 billion of its common stock and paid dividends and dividend equivalents of $3.7 billion.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 17
+
+␟
+
+Recent Accounting Pronouncements
+
+␟
+
+Income Taxes
+
+␟
+
+Income Taxes (Topic 740): Improvements to Income Tax Disclosures
+
+␟
+
+Segment Reporting
+
+␟
+
+In November 2023, the FASB issued ASU No. 2023-07,
+
+␟
+
+Segment Reporting (Topic 280): Improvements to Reportable Segment Disclosures
+
+␟
+
+Critical Accounting Estimates
+
+␟
+
+Evaluation of Disclosure Controls and Procedures
+
+␟
+
+Changes in Internal Control over Financial Reporting
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 18
+
+␟
+
+Digital Markets Act Investigations
+
+␟
+
+Department of Justice Lawsuit
+
+␟
+
+various civil litigation matters have been filed in state and federal courts in the U.S.
+
+␟
+
+alleging similar violations of U.S. antitrust laws and seeking monetary damages and other nonmonetary relief. The Company believes it has substantial defenses and intends to vigorously defend itself.
+
+␟
+
+Epic Games
+
+␟
+
+Other Legal Proceedings
+
+␟
+
+The technology industry, including, in some instances, the Company, is subject to intense media, political and regulatory scrutiny, which exposes the Company to increasing regulation, government investigations, legal actions and penalties.
+
+␟
+
+From time to time, the Company has made changes to its App Store, including actions taken in response to litigation, competition, market conditions and legal and regulatory requirements. The Company expects to make further business changes in the future. For example, in the U.S. the Company has implemented changes to how developers communicate with consumers within apps on the U.S. storefront of the iOS and iPadOS App Store regarding alternative purchasing mechanisms.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 19
+
+␟
+
+In January 2024, the Company announced changes to iOS, the App Store and Safari
+
+␟
+
+Purchases of Equity Securities by the Issuer and Affiliated Purchasers
+
+␟
+
+Periods
+
+␟
+
+Total Number
+
+␟
+
+of Shares Purchased
+
+␟
+
+Average Price
+
+␟
+
+Paid Per Share
+
+␟
+
+Total Number of Shares
+
+␟
+
+Purchased as Part of Publicly
+
+␟
+
+Announced Plans or Programs
+
+␟
+
+Approximate Dollar Value of
+
+␟
+
+Shares That May Yet Be Purchased
+
+␟
+
+Under the Plans or Programs
+
+␟
+
+December 31, 2023 to February 3, 2024:
+
+␟
+
+Open market and privately negotiated purchases
+
+␟
+
+February 4, 2024 to March 2, 2024:
+
+␟
+
+Open market and privately negotiated purchases
+
+␟
+
+March 3, 2024 to March 30, 2024:
+
+␟
+
+Open market and privately negotiated purchases
+
+␟
+
+Total
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 20
+
+␟
+
+None.
+
+␟
+
+Not applicable.
+
+␟
+
+Insider Trading Arrangements
+
+␟
+
+None
+
+␟
+
+Incorporated by Reference
+
+␟
+
+Exhibit
+
+␟
+
+Number
+
+␟
+
+Exhibit Description
+
+␟
+
+Form
+
+␟
+
+Exhibit
+
+␟
+
+Filing Date/
+
+␟
+
+Period End Date
+
+␟
+
+31.1*
+
+␟
+
+Rule 13a-14(a) / 15d-14(a) Certification of Chief Executive Officer.
+
+␟
+
+31.2*
+
+␟
+
+Rule 13a-14(a) / 15d-14(a) Certification of Chief Financial Officer.
+
+␟
+
+32.1**
+
+␟
+
+Section 1350 Certifications of Chief Executive Officer and Chief Financial Officer.
+
+␟
+
+101*
+
+␟
+
+104*
+
+␟
+
+Inline XBRL for the cover page of this Quarterly Report on Form 10-Q, included in the Exhibit 101 Inline XBRL Document Set.
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 21
+
+␟
+
+SIGNATURE
+
+␟
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.
+
+␟
+
+Apple Inc.
+
+␟
+
+By:
+
+␟
+
+/s/ Luca Maestri
+
+␟
+
+Luca Maestri
+
+␟
+
+Senior Vice President,
+
+␟
+
+Chief Financial Officer
+
+␟
+
+Apple Inc. | Q2 2024 Form 10-Q | 22
