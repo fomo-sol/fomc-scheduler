@@ -4,7 +4,7 @@ import { getTodayEarnings } from "../db/stock.js"; //짜야함
 import { runPollingJob } from "../jobs/runPollingJob.js"; // 짜야함
 import { pollingSet } from "../memory/pollingMemory.js";
 
-cron.schedule("12 15 * * *", async () => {
+cron.schedule("00 13 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행"); // 미국 동부에선 0시 0분
   // 오늘 실적 일정 조회
   try {
@@ -31,13 +31,13 @@ cron.schedule("12 15 * * *", async () => {
 
 export function runEarningsScheduler() {
   const intervals = [
-    { label: "bmo", hours: [15, 21, 22, 23] },
+    { label: "bmo", hours: [21, 22, 23] },
     { label: "amc", hours: [5, 6, 7] },
   ];
 
   for (const { label, hours } of intervals) {
     for (const hour of hours) {
-      for (let m = 0; m < 60; m += 13) {
+      for (let m = 0; m < 60; m += 1) {
         cron.schedule(`${m} ${hour} * * *`, async () => {
           console.log(
             `📅 ${label.toUpperCase()} 실적 발표 일정 수집 스케줄러 실행 (${hour}:${m})`

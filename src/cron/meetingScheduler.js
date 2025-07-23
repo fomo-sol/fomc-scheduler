@@ -10,10 +10,10 @@ dayjs.extend(timezone);
 
 export async function runMeetingScheduler() {
   const meetings = await getPendingMeetings();
-  //   const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const mockNow = dayjs.tz("2025-06-18T14:00:00", "America/New_York");
-  const today = mockNow.format("YYYY-MM-DD");
+  // const today = mockNow.format("YYYY-MM-DD");
   const currentHourMinute = mockNow.format("HH:mm");
 
   for (const meeting of meetings) {
