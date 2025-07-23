@@ -6,20 +6,42 @@ import path from "path";
 import axios from "axios";
 import { removeUselessTags, removeDisplayNone } from "./libs/preprocessor.js";
 import { PositionBasedTranslationParser } from "./libs/parser.js";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import s3 from "../../../config/s3Config.js";
 
 const API_KEY = process.env.DEEPL_API_KEY;
 const ENDPOINT = "https://api-free.deepl.com/v2/translate";
 const sourceLang = "EN";
 const targetLang = "KO";
 
-export async function runTranslatePipeline(inputHtmlPath) {
+export async function downloadOriginalHtmlFromS3(symbol, date) {
+  const s3Key = `earnings/${symbol}/${date}.htm`;
+  const localPath = path.resolve(`data/raw/${symbol}-${date}.html`);
+  fs.mkdirSync(path.dirname(localPath), { recursive: true });
+
+  const res = await s3
+    .getObject({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: s3Key,
+    })
+    .promise();
+
+  fs.writeFileSync(localPath, res.Body.toString("utf-8"));
+  console.log(`✅ 원본 HTML 다운로드 완료: ${localPath}`);
+  return localPath;
+}
+
+export async function runTranslatePipeline(symbol, date) {
   const resolvedPath = path.resolve(process.cwd(), inputHtmlPath);
-  const baseName = path.basename(inputHtmlPath, ".html");
+  //  const baseName = path.basename(inputHtmlPath, ".html");
 
   const baseDir = "data";
+  const baseName = `${symbol}-${date}`;
 
   // === Step 1: 원본 HTML 읽기 ===
-  const raw = fs.readFileSync(resolvedPath, "utf8");
+  const inputPath = await downloadOriginalHtmlFromS3(symbol, date);
+  const raw = fs.readFileSync(inputPath, "utf8");
+  // const raw = fs.readFileSync(resolvedPath, "utf8");
 
   // === Step 2: <TEXT> 태그 내부 추출 ===
   const match = raw.match(/<TEXT>([\s\S]*?)<\/TEXT>/i);
@@ -29,10 +51,6 @@ export async function runTranslatePipeline(inputHtmlPath) {
   }
   const htmlBody = match[1];
   // console.log(htmlBody);
-
-  // === Step 3: 전처리 및 저장 ===
-  // let preprocessed = removeDisplayNone(htmlBody);
-  // preprocessed = removeUselessTags(preprocessed);
 
   const preprocessedPath = `${baseDir}/preprocessed/${baseName}_clean.html`;
   fs.mkdirSync(path.dirname(preprocessedPath), { recursive: true });
@@ -115,5 +133,10 @@ export async function runTranslatePipeline(inputHtmlPath) {
   fs.mkdirSync(path.dirname(outputHtmlPath), { recursive: true });
   fs.writeFileSync(outputHtmlPath, resultHtml, "utf-8");
 
-  console.log(`🎉 최종 번역 HTML 저장 완료: ${outputHtmlPath}`);
+  console.log(`🎉 최종 번역 완료: ${outputHtmlPath}`);
+
+  // 8️⃣ S3 업로드
+  const s3Key = `earnings/translate/${symbol}/${date}.html`;
+  await uploadTranslatedFileToS3(outputHtmlPath, s3Key);
+  console.log(`✅ S3 업로드 완료: ${s3Key}`);
 }

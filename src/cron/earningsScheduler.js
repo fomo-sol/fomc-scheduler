@@ -4,7 +4,7 @@ import { getTodayEarnings } from "../db/stock.js"; //짜야함
 import { runPollingJob } from "../jobs/runPollingJob.js"; // 짜야함
 import { pollingSet } from "../memory/pollingMemory.js";
 
-cron.schedule("02 17 * * *", async () => {
+cron.schedule("17 21 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행"); // 미국 동부에선 0시 0분
   // 오늘 실적 일정 조회
   try {

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import pool from "../../config/db.js";
 import { handleEarningFileUpload } from "./s3/earningload.js";
 import { summarizeAndUploadEarningFile } from "./openai/summarize_analyze_earning.js";
-
+import { runTranslatePipeline } from "./translate/translatePipeline.js";
 const userAgents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15",
@@ -69,5 +69,19 @@ export async function fetchAndProcessEarningDoc({ symbol, date, link }) {
   );
 
   console.log(`🎉 [${symbol}] S3 업로드 및 OpenAI 분석 완료`);
+
+  // 번역 PipeLine 실행 (일단 local의 data/raw 안에 넣어두고 하는데 나중에 s3에서 받아오는 거 되면 삭제하기)
+  const localPath = `./data/raw/${symbol}-${formattedDate}.html`;
+  fs.mkdirSync(path.dirname(localPath), { recursive: true });
+  fs.writeFileSync(localPath, html, "utf-8");
+
+  // 번역 파이프라인 수행
+  try {
+    await runTranslatePipeline(symbol, date); // DeepL 번역 & S3 업로드 포함
+    console.log(`🎉 [${symbol}] 번역 파이프라인 완료`);
+  } catch (e) {
+    console.error(`❌ [${symbol}] 번역 파이프라인 실패:`, e.message);
+  }
+
   return true;
 }
