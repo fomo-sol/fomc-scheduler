@@ -1,6 +1,11 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import s3 from "../../../config/s3Config.js"; // export default S3Client
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
+import {
+  translateHtmlWithDeepL,
+  wrapTranslatedHtmlWithStyle,
+  uploadTranslatedHtmlToS3,
+} from "../fomc-translate/fomc-function.js";
 
 import * as cheerio from "cheerio";
 

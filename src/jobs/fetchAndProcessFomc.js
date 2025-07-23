@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import pool from "../../config/db.js";
 import { handleFomcFileUpload } from "./s3/load.js";
 import { summarizeAndUploadFomcFile } from "./openai/summarize_analyze.js";
+import { translateAndUploadOriginalFomcHtml } from "./fomc-translate/fomc-function.js";
 
 const userAgents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
@@ -53,8 +54,14 @@ export async function fetchAndProcessFomcDoc({ type, date, baseUrl }) {
         type,
         date
       );
-
       console.log(`🎉 [${type}] S3 업로드 및 OpenAI 분석 완료`);
+      // pdf 부분은 아직 처리 못함
+      // await translateAndUploadOriginalFomcHtml(
+      //    `fomc_files/${type}/${date}.htm`,
+      //   type,
+      //   date
+      // );
+      // console.log(`🎉 [${type}] translate 완료`);
       return true;
     }
 
@@ -100,6 +107,13 @@ export async function fetchAndProcessFomcDoc({ type, date, baseUrl }) {
     );
 
     console.log(`🎉 [${type}] S3 업로드 및 OpenAI 분석 완료`);
+
+    await translateAndUploadOriginalFomcHtml(
+      `fomc_files/${type}/${date}.htm`,
+      type,
+      date
+    );
+    console.log(`🎉 [${type}] translate 완료`);
     return true;
   } catch (err) {
     console.error(`❌ [${type}] 요청 실패:`, err.message);
