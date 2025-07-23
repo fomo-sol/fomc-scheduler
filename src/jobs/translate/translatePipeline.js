@@ -16,25 +16,35 @@ export async function runTranslatePipeline(inputHtmlPath) {
   const resolvedPath = path.resolve(process.cwd(), inputHtmlPath);
   const baseName = path.basename(inputHtmlPath, ".html");
 
-  const baseDir = "src/jobs/translate/data";
+  const baseDir = "data";
 
-  // Paths
-  const preprocessedPath = `${baseDir}/preprocessed/${baseName}_clean.html`;
-  const joinedPath = `${baseDir}/segments/${baseName}_joined.txt`;
-  const parserJsonPath = `${baseDir}/segments/${baseName}_parser.json`;
-  const translatedTextPath = `${baseDir}/translations/${baseName}_translated.txt`;
-  const outputHtmlPath = `${baseDir}/translated/${baseName}_translated.html`;
+  // === Step 1: 원본 HTML 읽기 ===
+  const raw = fs.readFileSync(resolvedPath, "utf8");
 
-  console.log(`step [1/3] 전처리 및 세그먼트 추출: ${inputHtmlPath}`);
+  // === Step 2: <TEXT> 태그 내부 추출 ===
+  const match = raw.match(/<TEXT>([\s\S]*?)<\/TEXT>/i);
+  if (!match) {
+    console.error("❌ <TEXT> 블록을 찾을 수 없습니다.");
+    return;
+  }
+  const htmlBody = match[1];
+  // console.log(htmlBody);
 
-  const html = fs.readFileSync(resolvedPath, "utf8");
-  let preprocessed = removeDisplayNone(html);
+  // === Step 3: 전처리 및 저장 ===
+  let preprocessed = removeDisplayNone(htmlBody);
   preprocessed = removeUselessTags(preprocessed);
+
+  const preprocessedPath = `${baseDir}/preprocessed/${baseName}_clean.html`;
   fs.mkdirSync(path.dirname(preprocessedPath), { recursive: true });
   fs.writeFileSync(preprocessedPath, preprocessed, "utf-8");
 
-  const parser = new PositionBasedTranslationParser(preprocessed);
+  // === Step 4: 파서로 세그먼트 추출 ===
+  const parser = new PositionBasedTranslationParser(htmlBody);
   const result = parser.extractTextsWithPositions();
+
+  const joinedPath = `${baseDir}/segments/${baseName}_joined.txt`;
+  const parserJsonPath = `${baseDir}/segments/${baseName}_parser.json`;
+
   fs.mkdirSync(path.dirname(joinedPath), { recursive: true });
   fs.writeFileSync(
     joinedPath,
@@ -43,11 +53,14 @@ export async function runTranslatePipeline(inputHtmlPath) {
   );
   fs.writeFileSync(parserJsonPath, JSON.stringify(parser), "utf-8");
 
-  console.log(`step [2/3] DeepL 번역 요청 중...`);
+  console.log(`✅ 세그먼트 추출 완료: ${result.segments.length}개`);
+
+  // === Step 5: 번역 요청 ===
+  console.log(`🌐 DeepL 번역 요청 중...`);
 
   const textToTranslate = fs.readFileSync(joinedPath, "utf-8");
-
   let translatedText = "";
+
   try {
     const response = await axios.post(
       ENDPOINT,
@@ -64,19 +77,27 @@ export async function runTranslatePipeline(inputHtmlPath) {
       }
     );
     translatedText = response.data.translations[0].text;
-    fs.mkdirSync(path.dirname(translatedTextPath), { recursive: true });
-    fs.writeFileSync(translatedTextPath, translatedText, "utf-8");
-    console.log(`번역 완료 및 저장: ${translatedTextPath}`);
   } catch (err) {
-    console.error("번역 실패:", err.response?.data || err.message);
+    console.error("❌ 번역 실패:", err.response?.data || err.message);
     return;
   }
 
-  console.log(`step [3/3] 번역된 HTML 생성`);
+  const translatedTextPath = `${baseDir}/translations/${baseName}_translated.txt`;
+  fs.mkdirSync(path.dirname(translatedTextPath), { recursive: true });
+  fs.writeFileSync(translatedTextPath, translatedText, "utf-8");
 
-  const translatedSegments = translatedText.split("\n\n␟\n\n");
+  console.log(`✅ 번역 저장 완료: ${translatedTextPath}`);
+
+  // === Step 6: HTML 재구성 ===
+  console.log(`🔧 번역 HTML 재구성 중...`);
+
+  const translatedSegments = translatedText
+    .replaceAll("\r\n", "\n")
+    .split("\n\n␟\n\n");
+
   const parserObj = JSON.parse(fs.readFileSync(parserJsonPath, "utf-8"));
   const originalHtml = fs.readFileSync(preprocessedPath, "utf-8");
+
   const restoreParser = new PositionBasedTranslationParser(originalHtml);
   restoreParser.textSegments = parserObj.textSegments;
 
@@ -86,6 +107,7 @@ export async function runTranslatePipeline(inputHtmlPath) {
   });
 
   const resultHtml = restoreParser.reconstructHtml(translationMap);
+  const outputHtmlPath = `${baseDir}/translated/${baseName}_translated.html`;
   fs.mkdirSync(path.dirname(outputHtmlPath), { recursive: true });
   fs.writeFileSync(outputHtmlPath, resultHtml, "utf-8");
 
