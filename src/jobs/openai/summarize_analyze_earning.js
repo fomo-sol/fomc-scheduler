@@ -3,7 +3,7 @@ import s3 from "../../../config/s3Config.js"; // export default S3Client
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 import * as cheerio from "cheerio";
-
+import { extractFontTextFromHtmlBuffer } from "./extractFontTextFromHtmlBuffer.js";
 import { OpenAI } from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -35,9 +35,10 @@ async function extractTextFromFile(buffer, contentType) {
     const pdft = await extractTextFromPdf(buffer);
     return pdft;
   } else if (contentType.includes("html")) {
-    const $ = cheerio.load(buffer.toString("utf-8"));
-    const target = $("div.col-xs-12.col-sm-8.col-md-8");
-    return target.text().replace(/\s+/g, " ").trim();
+    // const $ = cheerio.load(buffer.toString("utf-8"));
+    // const target = $("div.col-xs-12.col-sm-8.col-md-8");
+    // return target.text().replace(/\s+/g, " ").trim();
+    return extractFontTextFromHtmlBuffer(buffer);
   } else {
     throw new Error("지원하지 않는 파일 형식입니다.");
   }
