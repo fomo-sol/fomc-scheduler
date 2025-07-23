@@ -31,12 +31,12 @@ export async function runTranslatePipeline(inputHtmlPath) {
   // console.log(htmlBody);
 
   // === Step 3: 전처리 및 저장 ===
-  let preprocessed = removeDisplayNone(htmlBody);
-  preprocessed = removeUselessTags(preprocessed);
+  // let preprocessed = removeDisplayNone(htmlBody);
+  // preprocessed = removeUselessTags(preprocessed);
 
   const preprocessedPath = `${baseDir}/preprocessed/${baseName}_clean.html`;
   fs.mkdirSync(path.dirname(preprocessedPath), { recursive: true });
-  fs.writeFileSync(preprocessedPath, preprocessed, "utf-8");
+  fs.writeFileSync(preprocessedPath, htmlBody, "utf-8");
 
   // === Step 4: 파서로 세그먼트 추출 ===
   const parser = new PositionBasedTranslationParser(htmlBody);
@@ -51,7 +51,11 @@ export async function runTranslatePipeline(inputHtmlPath) {
     result.segments.map((s) => s.text).join("\n\n␟\n\n"),
     "utf-8"
   );
-  fs.writeFileSync(parserJsonPath, JSON.stringify(parser), "utf-8");
+  fs.writeFileSync(
+    parserJsonPath,
+    JSON.stringify({ textSegments: parser.textSegments }),
+    "utf-8"
+  );
 
   console.log(`✅ 세그먼트 추출 완료: ${result.segments.length}개`);
 
