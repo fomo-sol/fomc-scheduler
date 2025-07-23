@@ -45,10 +45,10 @@ export async function runPollingJob(stock_id, label) {
     }
 
     // 오늘 날짜꺼 있는지
-    const today = format(new Date(), "yyyy-MM-dd");
+    // const today = format(new Date(), "yyyy-MM-dd");
     // const todayFilings = filings.filingDate.findIndex((date) => date === today);
 
-    // const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
+    const today = format(subDays(new Date(), 1), "yyyy-MM-dd");
     const todayFilings = filings.filingDate.findIndex((date) => date === today);
 
     const filingDates = filings.filingDate;

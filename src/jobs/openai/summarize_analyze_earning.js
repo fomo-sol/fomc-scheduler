@@ -92,7 +92,7 @@ The following text is extracted from a company's quarterly or annual financial r
 :압정: Format must be **web-ready** and concise but informative.
 :아래를_가리키는_손_모양: Here is the raw text content from the SEC report (truncate to first 12,000 characters for input):
 [Begin SEC Report Text Below]
-${fullText.slice(0, 12000)}
+${fullText}
 `;
 
   const response = await openai.chat.completions.create({

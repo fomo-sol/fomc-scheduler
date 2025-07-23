@@ -89,8 +89,8 @@ export async function saveEarningsToDb(earnings) {
 }
 
 export async function getTodayEarnings() {
-  const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() and fin_period_date is not null`;
-  //   const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() - INTERVAL 1 DAY and fin_period_date is not null`;
+  //   const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() and fin_period_date is not null`;
+  const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() - INTERVAL 1 DAY and fin_period_date is not null`;
   try {
     const rows = await pool.query(query);
     if (rows.length === 0) {
