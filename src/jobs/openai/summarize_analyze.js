@@ -85,7 +85,7 @@ Meeting content:
 
 
 
-${fullText.slice(0, 12000)}  
+${fullText}  
 `;
 
   const response = await openai.chat.completions.create({
