@@ -3,6 +3,7 @@ import cron from "node-cron";
 import { fetchFomcMeetingDates } from "../jobs/fetchFomcCalendar.js";
 import { saveMeetingsToDb } from "../db/meetingDates.js";
 import { runMeetingScheduler } from "./meetingScheduler.js";
+import "./dailyMeetingScheduler.js";
 
 export const runYearlyFomcUpdate = async () => {
   try {
@@ -14,7 +15,7 @@ export const runYearlyFomcUpdate = async () => {
     }
 
     await saveMeetingsToDb(meetings);
-    await runMeetingScheduler();
+    // await runMeetingScheduler();
 
     console.log(`✅ 2025년 FOMC 회의 일정 업데이트 완료`);
   } catch (err) {
