@@ -44,11 +44,18 @@ export async function runPollingJob(stock_id, label) {
       return false;
     }
 
-    // 오늘 날짜꺼 있는지
-    // const today = format(new Date(), "yyyy-MM-dd");
-    // const todayFilings = filings.filingDate.findIndex((date) => date === today);
+    // 현재 시간 (한국 시간)
+    const now = new Date();
+    const currentHour = now.getHours();
 
-    const today = format(subDays(new Date(), 1), "yyyy-MM-dd");
+    const isBefore2pm = currentHour < 14;
+
+    // 14시 전이면 하루 전, 아니면 오늘
+    const today = isBefore2pm
+      ? format(subDays(now, 1), "yyyy-MM-dd")
+      : format(now, "yyyy-MM-dd");
+
+    // filings 배열에서 today와 일치하는 인덱스 찾기
     const todayFilings = filings.filingDate.findIndex((date) => date === today);
 
     const filingDates = filings.filingDate;

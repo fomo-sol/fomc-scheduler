@@ -25,3 +25,5 @@ pnpm-lock.yaml
 
 
 src/jobs/translate/data/
+
+log*
