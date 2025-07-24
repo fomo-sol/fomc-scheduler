@@ -56,8 +56,8 @@ export async function runPollingJob(stock_id, label) {
       : format(now, "yyyy-MM-dd");
 
     // filings 배열에서 today와 일치하는 인덱스 찾기
-    const todayFilings = filings.filingDate.findIndex((date) => date === today);
 
+    const todayFilings = filings.filingDate.findIndex((date) => date === today);
     const filingDates = filings.filingDate;
     const accessionNumbers = filings.accessionNumber;
     const form = filings.form;

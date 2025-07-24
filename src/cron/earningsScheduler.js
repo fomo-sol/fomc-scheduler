@@ -4,9 +4,9 @@ import { getTodayEarnings } from "../db/stock.js"; //짜야함
 import { runPollingJob } from "../jobs/runPollingJob.js"; // 짜야함
 import { pollingSet } from "../memory/pollingMemory.js";
 
-cron.schedule("07 09 * * *", async () => {
-  // 09시 07분 임
-  console.log("📅 매일 오후 8시에 실행"); // 미국 동부에선 0시 0분 // 실제로는 이때즘 돌게 해야
+
+cron.schedule("28 9 * * *", async () => {
+  console.log("📅 매일 오후 1시에 실행"); // 미국 동부에선 0시 0분
   // 오늘 실적 일정 조회
   try {
     const allEarnings = await getTodayEarnings();
@@ -32,8 +32,13 @@ cron.schedule("07 09 * * *", async () => {
 
 export function runEarningsScheduler() {
   const intervals = [
+<<<<<<< HEAD
     { label: "bmo", hours: [9, 21, 22, 23] }, // BMO는 9시, 21시, 22시, 23시
     { label: "amc", hours: [5, 6, 9] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
+=======
+    { label: "bmo", hours: [17, 21, 22, 23, 8, 9] },
+    { label: "amc", hours: [5, 6, 7, 8, 9] },
+>>>>>>> 769f23446a44d6e177a804c745e883795fd6915a
   ];
 
   for (const { label, hours } of intervals) {

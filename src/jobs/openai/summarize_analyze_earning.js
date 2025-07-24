@@ -183,7 +183,8 @@ export async function summarizeAndUploadEarningFile(
   date
 ) {
   try {
-    const { buffer, contentType } = await downloadFromS3(originalS3Key);
+    const cleanS3Key = originalS3Key.split("#")[0];
+    const { buffer, contentType } = await downloadFromS3(cleanS3Key);
     const text = await extractTextFromFile(buffer, contentType);
     const title = `${id} FOMC 회의 요약`;
     const html = await generateHtmlSummary(title, text, symbol, date);
