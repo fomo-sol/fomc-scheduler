@@ -1,6 +1,8 @@
 // config/s3Config.js (ESM 방식)
 
 import { S3Client } from "@aws-sdk/client-s3";
+import dotenv from "dotenv";
+dotenv.config();
 
 const s3Config = new S3Client({
   region: process.env.AWS_REGION,

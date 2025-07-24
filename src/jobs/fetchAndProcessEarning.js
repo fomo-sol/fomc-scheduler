@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import pool from "../../config/db.js";
 import { handleEarningFileUpload } from "./s3/earningload.js";
 import { summarizeAndUploadEarningFile } from "./openai/summarize_analyze_earning.js";
+import { notifyEarningsSummaryUpload } from "../cron/earningsScheduler.js";
 
 const userAgents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
@@ -69,5 +70,9 @@ export async function fetchAndProcessEarningDoc({ symbol, date, link }) {
   );
 
   console.log(`🎉 [${symbol}] S3 업로드 및 OpenAI 분석 완료`);
+
+  // S3 업로드 및 industry_analysis 업로드가 끝난 후 알림 전송
+  await notifyEarningsSummaryUpload(symbol, date);
+
   return true;
 }
