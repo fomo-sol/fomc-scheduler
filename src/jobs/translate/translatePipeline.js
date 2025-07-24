@@ -13,26 +13,51 @@ const API_KEY = process.env.DEEPL_API_KEY;
 const ENDPOINT = "https://api-free.deepl.com/v2/translate";
 const sourceLang = "EN";
 const targetLang = "KO";
+function streamToBuffer(stream) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    stream.on("data", (chunk) => chunks.push(chunk));
+    stream.on("end", () => resolve(Buffer.concat(chunks)));
+    stream.on("error", reject);
+  });
+}
 
 export async function downloadOriginalHtmlFromS3(symbol, date) {
   const s3Key = `earnings/${symbol}/${date}.htm`;
   const localPath = path.resolve(`data/raw/${symbol}-${date}.html`);
   fs.mkdirSync(path.dirname(localPath), { recursive: true });
 
-  const res = await s3
-    .getObject({
-      Bucket: process.env.S3_BUCKET_NAME,
-      Key: s3Key,
-    })
-    .promise();
+  const command = new GetObjectCommand({
+    Bucket: process.env.S3_BUCKET,
+    Key: s3Key,
+  });
 
-  fs.writeFileSync(localPath, res.Body.toString("utf-8"));
+  const res = await s3.send(command);
+
+  const bodyBuffer = await streamToBuffer(res.Body);
+  fs.writeFileSync(localPath, bodyBuffer.toString("utf-8"));
+
   console.log(`✅ 원본 HTML 다운로드 완료: ${localPath}`);
   return localPath;
 }
+export async function uploadTranslatedFileToS3(filePath, s3Key) {
+  const html = fs.readFileSync(filePath, "utf-8");
+
+  const command = new PutObjectCommand({
+    Bucket: process.env.S3_BUCKET, // 🔥 반드시 .env에 정의되어 있어야 함
+    Key: s3Key,
+    Body: Buffer.from(html, "utf-8"),
+    ContentType: "text/html; charset=utf-8",
+  });
+
+  await s3.send(command);
+
+  const url = `https://${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Key}`;
+  return url;
+}
 
 export async function runTranslatePipeline(symbol, date) {
-  const resolvedPath = path.resolve(process.cwd(), inputHtmlPath);
+  // const resolvedPath = path.resolve(process.cwd(), inputHtmlPath);
   //  const baseName = path.basename(inputHtmlPath, ".html");
 
   const baseDir = "data";
