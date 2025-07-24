@@ -45,12 +45,12 @@ export async function runPollingJob(stock_id, label) {
     }
 
     // 오늘 날짜꺼 있는지
+    // 한국 시간 00시 전에는 이거로
     // const today = format(new Date(), "yyyy-MM-dd");
-    // const todayFilings = filings.filingDate.findIndex((date) => date === today);
 
-    const today = format(subDays(new Date(), 1), "yyyy-MM-dd");
+    // 한국시간 00시 이후로는 이거로
+    const today = format(subDays(new Date(), 1), "yyyy-MM-dd"); // 이거 어제임
     const todayFilings = filings.filingDate.findIndex((date) => date === today);
-
     const filingDates = filings.filingDate;
     const accessionNumbers = filings.accessionNumber;
     const form = filings.form;
