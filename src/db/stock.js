@@ -87,10 +87,13 @@ export async function saveEarningsToDb(earnings) {
   }
 }
 
+// 오늘 실적
 export async function getTodayEarnings() {
   // const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() and fin_period_date is not null`;
   const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() - INTERVAL 1 DAY and fin_period_date is not null`;
+
   // 어제를 나타냄, 한국 24일 09시라면, db에서 23일꺼 갖고옴
+
 
   try {
     const rows = await pool.query(query);
@@ -98,13 +101,38 @@ export async function getTodayEarnings() {
       console.log("오늘 실적 일정이 없습니다.");
       return [];
     }
-    // console.log("오늘 실적 일정 조회 성공:", rows);
     return rows;
   } catch (err) {
     console.error("오늘 실적 일정 조회 실패:", err.message);
     return [];
   }
 }
+
+
+// 하루 전(D-1) 알림용: 내일 발표 예정 종목을 오늘 조회
+export async function getEarningsForPreAlarm() {
+  const query = `
+    SELECT sf.stock_id, sf.fin_release_date, sf.fin_hour, s.stock_symbol AS symbol
+    FROM stock_finances sf
+    JOIN stocks s ON sf.stock_id = s.id
+    WHERE sf.fin_release_date = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+      AND sf.fin_period_date IS NOT NULL
+  `;
+  const rows = await pool.query(query);
+  if (!rows || rows.length === 0) {
+    console.log("📭 하루 전 알림 대상 실적 일정이 없습니다.");
+    return [];
+  }
+  console.log("📅 하루 전 알림 대상 실적 일정:", rows);
+  return rows;
+}
+
+export async function getSymbolByStockId(stock_id) {
+  const query = "SELECT stock_symbol FROM stocks WHERE id = ?";
+  const rows = await pool.query(query, [stock_id]);
+  console.log('rows:', rows);
+  const row = rows[0];
+  return row ? row.stock_symbol : null;
 
 export async function getStockId(symbol) {
   const query = `select id from stocks where stock_symbol = ?`;
@@ -150,4 +178,5 @@ export async function updateStockFinances(
     console.error("updateStockFinances 에러:", err);
     return false;
   }
+
 }

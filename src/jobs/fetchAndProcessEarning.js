@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import pool from "../../config/db.js";
 import { handleEarningFileUpload } from "./s3/earningload.js";
 import { summarizeAndUploadEarningFile } from "./openai/summarize_analyze_earning.js";
+import { notifyEarningsSummaryUpload } from "../cron/earningsScheduler.js";
 import { runTranslatePipeline } from "./translate/translatePipeline.js";
 import fs from "fs";
 import path from "path";
@@ -148,6 +149,10 @@ export async function fetchAndProcessEarningDoc({
 
   console.log(`🎉 [${symbol}] S3 업로드 및 OpenAI 분석 완료`);
 
+
+  // S3 업로드 및 industry_analysis 업로드가 끝난 후 알림 전송
+  await notifyEarningsSummaryUpload(symbol, date);
+
   // 번역 PipeLine 실행 (일단 local의 data/raw 안에 넣어두고 하는데 나중에 s3에서 받아오는 거 되면 삭제하기)
   const localPath = `./data/raw/${symbol}-${formattedDate}.html`;
   fs.mkdirSync(path.dirname(localPath), { recursive: true });
@@ -160,6 +165,7 @@ export async function fetchAndProcessEarningDoc({
   } catch (e) {
     console.error(`❌ [${symbol}] 번역 파이프라인 실패:`, e.message);
   }
+
 
   return true;
 }
