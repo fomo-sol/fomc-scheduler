@@ -188,8 +188,6 @@ export async function summarizeAndUploadEarningFile(
     const text = await extractTextFromFile(buffer, contentType);
     const title = `${id} FOMC 회의 요약`;
     const html = await generateHtmlSummary(title, text, symbol, date);
-    console.log(html);
-    console.log(id);
     const htmlKey = `summaries/${symbol}/${date}.html`;
     const url = await uploadHtmlToS3(html, htmlKey);
 

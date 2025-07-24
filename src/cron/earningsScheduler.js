@@ -4,7 +4,11 @@ import { getTodayEarnings } from "../db/stock.js"; //짜야함
 import { runPollingJob } from "../jobs/runPollingJob.js"; // 짜야함
 import { pollingSet } from "../memory/pollingMemory.js";
 
-cron.schedule("28 9 * * *", async () => {
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+cron.schedule("33 15 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행"); // 미국 동부에선 0시 0분
   // 오늘 실적 일정 조회
   try {
@@ -31,17 +35,18 @@ cron.schedule("28 9 * * *", async () => {
 
 export function runEarningsScheduler() {
   const intervals = [
-    { label: "bmo", hours: [9, 21, 22, 23] }, // BMO는 9시, 21시, 22시, 23시
-    { label: "amc", hours: [5, 6, 9] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
+    { label: "bmo", hours: [15, 21, 22, 23] }, // BMO는 9시, 21시, 22시, 23시
+    { label: "amc", hours: [5, 6, 15] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
   ];
 
   for (const { label, hours } of intervals) {
     for (const hour of hours) {
-      for (let m = 0; m < 60; m += 1) {
+      for (let m = 0; m < 60; m += 34) {
         cron.schedule(`${m} ${hour} * * *`, async () => {
           console.log(
             `📅 ${label.toUpperCase()} 실적 발표 일정 수집 스케줄러 실행 (${hour}:${m})`
           );
+
           for (const e of pollingSet) {
             console.log(`🔍 ${e} 종목에 대해 실적 발표 일정 수집 시작`, label);
             const result = await runPollingJob(e, label); // cik 불러와야되고
@@ -51,6 +56,7 @@ export function runEarningsScheduler() {
             } else {
               console.log(`❌ ${e} 실적 발표 일정 수집 실패, 아직 안 올라옴!`);
             }
+            await delay(2000); // 10초 대기
           }
         });
       }
