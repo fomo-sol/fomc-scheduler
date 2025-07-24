@@ -11,8 +11,11 @@ import { runPollingJob } from "../jobs/runPollingJob.js";
 import { pollingSet } from "../memory/pollingMemory.js";
 import { getSymbolByStockId } from "../db/stock.js";
 
-// 실적 발표 일정 조회 스케줄러 (미국 동부 0시 0분)
-cron.schedule("21 17 * * *", async () => {
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+cron.schedule("33 15 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행"); // 미국 동부에선 0시 0분
   // 오늘 실적 일정 조회
   try {
@@ -144,14 +147,17 @@ cron.schedule("0 0 * * *", async () => {
 export function runEarningsScheduler() {
   console.log("[runEarningsScheduler] 실행됨");
   const intervals = [
-    { label: "bmo", hours: [8, 9, 10, 11, 12, 13, 15,16, 17, 21, 22, 23] },
-    { label: "amc", hours: [5, 6, 7] },
+
+    { label: "bmo", hours: [15, 21, 22, 23] }, // BMO는 9시, 21시, 22시, 23시
+    { label: "amc", hours: [5, 6, 15] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
+
   ];
 
   for (const { label, hours } of intervals) {
     for (const hour of hours) {
-      for (let m = 0; m < 60; m += 1) {
+      for (let m = 0; m < 60; m += 34) {
         cron.schedule(`${m} ${hour} * * *`, async () => {
+
           console.log(`📅 [${label.toUpperCase()}] 스케줄러 실행 (${hour}:${m})`);
           console.log("[runEarningsScheduler] pollingSet:", Array.from(pollingSet));
           for (const e of pollingSet) {
@@ -171,6 +177,7 @@ export function runEarningsScheduler() {
             if (result) {
               pollingSet.delete(e);
             }
+            await delay(2000); // 10초 대기
           }
         });
       }

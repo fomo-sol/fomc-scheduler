@@ -38,9 +38,11 @@ async function handleEarningFileUpload(id, link, symbol, date) {
     const ext =
       path.extname(link).split("?")[0] ||
       (contentType.includes("pdf") ? ".pdf" : ".html"); // 타입 찾아주고
+    //ext에 # 붙어있으면 뒤에 제거
+    const ext_ = ext.includes("#") ? ext.split("#")[0] : ext;
 
     // 2. S3 key 설정 (예: earnings/{id}.pdf 또는 html)
-    const s3Key = `earnings/${symbol}/${date}${ext}`;
+    const s3Key = `earnings/${symbol}/${date}${ext_}`;
 
     // 3. 업로드
     const { Location } = await uploadBufferToS3(buffer, s3Key, contentType);

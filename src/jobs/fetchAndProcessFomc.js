@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 import { v4 as uuidv4 } from "uuid";
 import pool from "../../config/db.js";
 import { handleFomcFileUpload } from "./s3/load.js";
@@ -79,15 +79,15 @@ export async function fetchAndProcessFomcDoc({ type, date, baseUrl }) {
 
     const html = await res.text();
 
-    if (html.includes("Page Not Found") || html.includes("404")) {
-      console.log(`⚠️ [${type}] 문서 아직 안 올라옴`);
-      return false;
-    }
+    // if (html.includes("Page Not Found") || html.includes("404")) {
+    //   console.log(`⚠️ [${type}] 문서 아직 안 올라옴`);
+    //   return false;
+    // }
 
-    if (!html.includes("<html")) {
-      console.log(`⚠️ [${type}] HTML 문서가 아님`);
-      return false;
-    }
+    // if (!html.includes("<html")) {
+    //   console.log(`⚠️ [${type}] HTML 문서가 아님`);
+    //   return false;
+    // }
 
     const conn = await pool.getConnection();
     await conn.query(

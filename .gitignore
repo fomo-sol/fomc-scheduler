@@ -23,5 +23,7 @@ yarn.lock
 pnpm-lock.yaml
 *.swp
 
-
+data/
 src/jobs/translate/data/
+
+log*

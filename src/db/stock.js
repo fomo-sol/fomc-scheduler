@@ -11,7 +11,6 @@ export async function filterSp500Stocks(earnings) {
   const uniqueSymbols = [...new Set(earnings.map((e) => e.symbol))];
   const placeholders = uniqueSymbols.map(() => "?").join(",");
 
-  console.log(uniqueSymbols, placeholders);
   const query = `
     SELECT stock_symbol FROM stocks
     WHERE stock_symbol IN (${placeholders})
@@ -93,6 +92,9 @@ export async function getTodayEarnings() {
   // const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() and fin_period_date is not null`;
   const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() - INTERVAL 1 DAY and fin_period_date is not null`;
 
+  // 어제를 나타냄, 한국 24일 09시라면, db에서 23일꺼 갖고옴
+
+
   try {
     const rows = await pool.query(query);
     if (rows.length === 0) {
@@ -105,6 +107,7 @@ export async function getTodayEarnings() {
     return [];
   }
 }
+
 
 // 하루 전(D-1) 알림용: 내일 발표 예정 종목을 오늘 조회
 export async function getEarningsForPreAlarm() {
@@ -130,4 +133,50 @@ export async function getSymbolByStockId(stock_id) {
   console.log('rows:', rows);
   const row = rows[0];
   return row ? row.stock_symbol : null;
+
+export async function getStockId(symbol) {
+  const query = `select id from stocks where stock_symbol = ?`;
+  try {
+    const [row] = await pool.query(query, [symbol]);
+    if (!row) {
+      console.log(`종목 ${symbol}에 해당하는 ID를 찾을 수 없습니다.`);
+      return null;
+    }
+    return row.id;
+  } catch (err) {
+    console.error("getStockId 에러:", err);
+    return null;
+  }
+}
+
+export async function updateStockFinances(
+  stockId,
+  date,
+  epsActual,
+  revenueActual
+) {
+  const query = `
+  UPDATE stock_finances
+  SET fin_eps_value = ?, fin_revenue_value = ?
+  WHERE stock_id = ? AND fin_release_date = CAST(? AS DATE)
+`;
+
+  try {
+    const result = await pool.query(query, [
+      epsActual,
+      revenueActual,
+      stockId,
+      date,
+    ]);
+    if (result.affectedRows > 0) {
+      console.log(`✅ stock_finances 업데이트 성공: ${stockId}, ${date}`);
+      return true;
+    }
+    console.log(`⚠️ stock_finances 업데이트 실패: 해당 데이터가 없습니다.`);
+    return false;
+  } catch (err) {
+    console.error("updateStockFinances 에러:", err);
+    return false;
+  }
+
 }
