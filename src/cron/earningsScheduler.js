@@ -14,32 +14,42 @@ import { getSymbolByStockId } from "../db/stock.js";
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+// 실적 발표 일정 조회 스케줄러 (미국 동부 0시 0분)
+cron.schedule("00 13 * * *", async () => {
+  console.log("📅 매일 오후 1시에 실행 (미국 동부 0시 0분)");
 
-cron.schedule("42 8 * * *", async () => {
-  console.log("📅 매일 오후 8시에 실행"); // 미국 동부에선 0시 0분
-  // 오늘 실적 일정 조회
+  // 1. D-1 알림 (내일 실적 발표)
+  try {
+    const d1Earnings = await getEarningsForPreAlarm();
+    for (const earnings of d1Earnings) {
+      const { stock_id, fin_release_date } = earnings;
+      const symbol = earnings.symbol || earnings.stock_id;
+      const statementDay = dayjs(fin_release_date).format("YYYY-MM-DD");
+      await notifyEarningsPreAlarm(statementDay, stock_id, symbol);
+    }
+    console.log(`총 ${d1Earnings.length}건의 D-1 알림이 발송되었습니다.`);
+  } catch (err) {
+    console.error("D-1 알림 발송 실패:", err);
+  }
+
+  // 2. 오늘 실적 발표 pollingSet 등록
+
   try {
     const allEarnings = await getTodayEarnings();
-
-    runD1Alarm();
-
     pollingSet.clear();
-    if (allEarnings.length > 0) {
-      console.log("오늘의 실적 발표 일정:", allEarnings);
-      let i = 0;
-      for (const earnings of allEarnings) {
-        if (!pollingSet.has(earnings.stock_id)) {
-          pollingSet.add(earnings.stock_id);
-          i++;
-        }
+    let i = 0;
+    for (const earnings of allEarnings) {
+      if (!pollingSet.has(earnings.stock_id)) {
+        pollingSet.add(earnings.stock_id);
+        i++;
       }
-      console.log(`총 ${i}건의 실적 발표 일정이 등록되었습니다.`);
-    } else {
-      console.log("오늘의 실적 발표 일정이 없습니다.");
     }
+    console.log(`총 ${i}건의 실적 발표 일정이 pollingSet에 등록되었습니다.`);
   } catch (err) {
     console.error("오늘의 실적 발표 일정 조회 실패:", err);
   }
+
+  // 3. polling 및 업로드+요약 알림 스케줄러 실행
   runEarningsScheduler();
 });
 
@@ -49,7 +59,7 @@ dayjs.extend(timezone);
 
 // [필수] 하루 전(D-1) 개별 알림
 async function notifyEarningsPreAlarm(date, stock_id, symbol) {
-  console.log("notifyEarningsPreAlarm 호출됨", date, stock_id, symbol); // 추가
+  console.log("notifyEarningsPreAlarm 호출됨", date, stock_id, symbol);
   const urls = ["http://localhost:4000/api/notifications/earnings/prealarm"];
   for (const url of urls) {
     try {
@@ -142,33 +152,17 @@ export async function notifyEarningsSummaryUpload(symbol, date) {
   }
 }
 
-// [필수] 하루 전(D-1) 알림 스케줄러 (매일 0시)
-// cron.schedule("0 0 * * *", async () => {
-//   const allEarnings = await getTodayEarnings();
-//   // const today = dayjs().format("YYYY-MM-DD");
-//   for (const earnings of allEarnings) {
-//     const { stock_id, fin_release_date } = earnings;
-//     const symbol = earnings.symbol || earnings.stock_id;
-//     const statementDay = dayjs(fin_release_date).format("YYYY-MM-DD");
-//     // const oneDayBefore = dayjs(fin_release_date).subtract(1, "day").format("YYYY-MM-DD");
-//     // if (today === oneDayBefore) {
-//     await notifyEarningsPreAlarm(statementDay, stock_id, symbol);
-//     // }
-//   }
-//   runEarningsScheduler();
-// });
-
 // [필수] 실적 발표 polling 및 업로드+요약 알림
 export function runEarningsScheduler() {
   console.log("[runEarningsScheduler] 실행됨");
   const intervals = [
-    { label: "bmo", hours: [21, 22, 23, 0] }, // BMO는 9시, 21시, 22시, 23시
+    { label: "bmo", hours: [20, 21, 22, 23, 0] }, // BMO는 9시, 21시, 22시, 23시
     { label: "amc", hours: [5, 6, 7, 8] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
   ];
 
   for (const { label, hours } of intervals) {
     for (const hour of hours) {
-      for (let m = 0; m < 60; m += 43) {
+      for (let m = 0; m < 60; m += 15) {
         cron.schedule(`${m} ${hour} * * *`, async () => {
           console.log(
             `📅 [${label.toUpperCase()}] 스케줄러 실행 (${hour}:${m})`
@@ -212,19 +206,3 @@ export function runEarningsScheduler() {
   }
 }
 
-export async function runD1Alarm() {
-  const allEarnings = await getEarningsForPreAlarm();
-  for (const earnings of allEarnings) {
-    const { stock_id, fin_release_date } = earnings;
-    const symbol = earnings.symbol || earnings.stock_id;
-    const statementDay = dayjs(fin_release_date).format("YYYY-MM-DD");
-    const oneDayBefore = dayjs(fin_release_date)
-      .subtract(1, "day")
-      .format("YYYY-MM-DD");
-    const today = dayjs().format("YYYY-MM-DD");
-
-    if (today === oneDayBefore) {
-      await notifyEarningsPreAlarm(statementDay, stock_id, symbol);
-    }
-  }
-}
