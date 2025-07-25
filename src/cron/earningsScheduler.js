@@ -12,28 +12,40 @@ import { pollingSet } from "../memory/pollingMemory.js";
 import { getSymbolByStockId } from "../db/stock.js";
 
 // 실적 발표 일정 조회 스케줄러 (미국 동부 0시 0분)
-cron.schedule("21 17 * * *", async () => {
-  console.log("📅 매일 오후 1시에 실행"); // 미국 동부에선 0시 0분
-  // 오늘 실적 일정 조회
+cron.schedule("13 10 * * *", async () => {
+  console.log("📅 매일 오후 1시에 실행 (미국 동부 0시 0분)");
+
+  // 1. D-1 알림 (내일 실적 발표)
+  try {
+    const d1Earnings = await getEarningsForPreAlarm();
+    for (const earnings of d1Earnings) {
+      const { stock_id, fin_release_date } = earnings;
+      const symbol = earnings.symbol || earnings.stock_id;
+      const statementDay = dayjs(fin_release_date).format("YYYY-MM-DD");
+      await notifyEarningsPreAlarm(statementDay, stock_id, symbol);
+    }
+    console.log(`총 ${d1Earnings.length}건의 D-1 알림이 발송되었습니다.`);
+  } catch (err) {
+    console.error("D-1 알림 발송 실패:", err);
+  }
+
+  // 2. 오늘 실적 발표 pollingSet 등록
   try {
     const allEarnings = await getTodayEarnings();
     pollingSet.clear();
-    if (allEarnings.length > 0) {
-      console.log("오늘의 실적 발표 일정:", allEarnings);
-      let i = 0;
-      for (const earnings of allEarnings) {
-        if (!pollingSet.has(earnings.stock_id)) {
-          pollingSet.add(earnings.stock_id);
-          i++;
-        }
+    let i = 0;
+    for (const earnings of allEarnings) {
+      if (!pollingSet.has(earnings.stock_id)) {
+        pollingSet.add(earnings.stock_id);
+        i++;
       }
-      console.log(`총 ${i}건의 실적 발표 일정이 등록되었습니다.`);
-    } else {
-      console.log("오늘의 실적 발표 일정이 없습니다.");
     }
+    console.log(`총 ${i}건의 실적 발표 일정이 pollingSet에 등록되었습니다.`);
   } catch (err) {
     console.error("오늘의 실적 발표 일정 조회 실패:", err);
   }
+
+  // 3. polling 및 업로드+요약 알림 스케줄러 실행
   runEarningsScheduler();
 });
 
@@ -124,22 +136,6 @@ export async function notifyEarningsSummaryUpload(symbol, date) {
   }
 }
 
-// [필수] 하루 전(D-1) 알림 스케줄러 (매일 0시)
-cron.schedule("0 0 * * *", async () => {
-  const allEarnings = await getTodayEarnings();
-  // const today = dayjs().format("YYYY-MM-DD");
-  for (const earnings of allEarnings) {
-    const { stock_id, fin_release_date } = earnings;
-    const symbol = earnings.symbol || earnings.stock_id;
-    const statementDay = dayjs(fin_release_date).format("YYYY-MM-DD");
-    // const oneDayBefore = dayjs(fin_release_date).subtract(1, "day").format("YYYY-MM-DD");
-    // if (today === oneDayBefore) {
-      await notifyEarningsPreAlarm(statementDay, stock_id, symbol);
-    // }
-  }
-  runEarningsScheduler();
-});
-
 // [필수] 실적 발표 polling 및 업로드+요약 알림
 export function runEarningsScheduler() {
   console.log("[runEarningsScheduler] 실행됨");
@@ -176,21 +172,5 @@ export function runEarningsScheduler() {
       }
     }
   }
-}
-
-export async function runD1Alarm() {
-  const allEarnings = await getEarningsForPreAlarm();
-  for (const earnings of allEarnings) {
-    const { stock_id, fin_release_date } = earnings;
-    const symbol = earnings.symbol || earnings.stock_id;
-    const statementDay = dayjs(fin_release_date).format("YYYY-MM-DD");
-    const oneDayBefore = dayjs(fin_release_date).subtract(1, "day").format("YYYY-MM-DD");
-    const today = dayjs().format("YYYY-MM-DD");
-
-    if (today === oneDayBefore) {
-      await notifyEarningsPreAlarm(statementDay, stock_id, symbol);
-    }
-  }
-  runEarningsScheduler();
 }
 
