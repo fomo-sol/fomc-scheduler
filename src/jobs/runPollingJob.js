@@ -19,7 +19,6 @@ export async function runPollingJob(stock_id, label) {
       `select s.stock_cik, s.stock_symbol from stocks s join stock_finances f on s.id = f.stock_id where s.id=? and f.fin_hour=? and f.fin_period_date is not null`,
       [stock_id, label]
     );
-    console.log(stockRow);
     if (!stockRow || !stockRow.stock_cik) {
       console.log(`No CIK found for stock_id in ${label}: ${stock_id}`);
       return false;
@@ -44,13 +43,20 @@ export async function runPollingJob(stock_id, label) {
       return false;
     }
 
-    // 오늘 날짜꺼 있는지
-    // const today = format(new Date(), "yyyy-MM-dd");
-    // const todayFilings = filings.filingDate.findIndex((date) => date === today);
+    // 현재 시간 (한국 시간)
+    const now = new Date();
+    const currentHour = now.getHours();
 
-    const today = format(subDays(new Date(), 1), "yyyy-MM-dd");
+    const isBefore1pm = currentHour < 13; // 테스트 할거면 당신의 시간보다 늦게 하면 됨 // 당일날, 실제 받아오고 싶으면 13으로 하면됨
+
+    // 14시 전이면 하루 전, 아니면 오늘
+    const today = isBefore1pm
+      ? format(subDays(now, 1), "yyyy-MM-dd")
+      : format(now, "yyyy-MM-dd");
+
+    // filings 배열에서 today와 일치하는 인덱스 찾기
+
     const todayFilings = filings.filingDate.findIndex((date) => date === today);
-
     const filingDates = filings.filingDate;
     const accessionNumbers = filings.accessionNumber;
     const form = filings.form;
@@ -101,13 +107,14 @@ export async function runPollingJob(stock_id, label) {
 
     const real_link = await makeRealLink(cik, accessionNumber, send_link);
 
-    fetchAndProcessEarningDoc({
+    const res = await fetchAndProcessEarningDoc({
       symbol: stockRow.stock_symbol,
       date: today,
       link: real_link,
+      referer_link: send_link,
     });
 
-    return true;
+    return res;
   } catch (err) {
     console.error("Error occurred while running polling job:", err);
     return false;
