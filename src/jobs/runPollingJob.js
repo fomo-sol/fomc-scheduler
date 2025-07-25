@@ -47,10 +47,10 @@ export async function runPollingJob(stock_id, label) {
     const now = new Date();
     const currentHour = now.getHours();
 
-    const isBefore2pm = currentHour < 20;
+    const isBefore1pm = currentHour < 13; // 테스트 할거면 당신의 시간보다 늦게 하면 됨 // 당일날, 실제 받아오고 싶으면 13으로 하면됨
 
     // 14시 전이면 하루 전, 아니면 오늘
-    const today = isBefore2pm
+    const today = isBefore1pm
       ? format(subDays(now, 1), "yyyy-MM-dd")
       : format(now, "yyyy-MM-dd");
 

@@ -7,7 +7,12 @@ import { notifyEarningsSummaryUpload } from "../cron/earningsScheduler.js";
 import { runTranslatePipeline } from "./translate/translatePipeline.js";
 import fs from "fs";
 import path from "path";
-import { getStockId, updateStockFinances } from "../db/stock.js";
+import {
+  getReleaseIdByStockIdAndDate,
+  getStockId,
+  insertReleaseContentEn,
+  updateStockFinances,
+} from "../db/stock.js";
 
 const userAgents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
@@ -55,31 +60,8 @@ export async function fetchAndProcessEarningDoc({
 
     console.log(`❌ [${symbol}] 문서 요청 실패: ${res.statusText}`);
 
-    const body = await res.text();
-    fs.writeFileSync(
-      `./data/errors/${symbol}-${formattedDate}.html`,
-      body,
-      "utf-8"
-    );
-    fs.writeFileSync(
-      `./data/errors/${symbol}-${formattedDate}.json`,
-      JSON.stringify(res.headers, null, 2),
-      "utf-8"
-    );
-
-    fs.writeFileSync(
-      `./data/errors/${symbol}-${formattedDate}.json`,
-      JSON.stringify(headers, null, 2),
-      "utf-8"
-    );
-
     return false;
   }
-  fs.writeFileSync(
-    `./data/success/${symbol}-${formattedDate}.json`,
-    JSON.stringify(headers, null, 2),
-    "utf-8"
-  );
 
   const html = await res.text();
 
@@ -109,6 +91,7 @@ export async function fetchAndProcessEarningDoc({
 
   // symbol date에 해당하는 상회치 db에 저장, fetch 해서 update db
   const FINNHUB_TOKEN = process.env.FINNHUB_TOKEN;
+  let needData;
   try {
     const stockId = await getStockId(symbol);
     if (!stockId) {
@@ -125,7 +108,7 @@ export async function fetchAndProcessEarningDoc({
       return false;
     }
     const data = await response.json();
-    const needData = await data.earningsCalendar?.[0];
+    needData = await data.earningsCalendar?.[0];
     await updateStockFinances(
       stockId,
       needData?.date,
@@ -139,16 +122,35 @@ export async function fetchAndProcessEarningDoc({
     return false;
   }
 
-  await handleEarningFileUpload(id, url, symbol, date); // S3 업로드 (html 저장)
+  // 여기서 Quarter 도 받아와 needData.quarter 에 있음,
+  const quarter = needData?.quarter;
+  const year = needData?.year;
+  const stockId = await getStockId(symbol);
+  const finance_release_id = await getReleaseIdByStockIdAndDate(stockId, date);
+
+  const aws_link = await handleEarningFileUpload(
+    id,
+    url,
+    symbol,
+    date,
+    quarter,
+    year
+  ); // S3 업로드 (html 저장)
+
+  await insertReleaseContentEn(id, finance_release_id, aws_link);
+
+  // return 값이 Location 이므로, 이를 maria db에 저장
   await summarizeAndUploadEarningFile(
     id,
-    `earnings/${symbol}/${date}.htm`,
+    `earnings_symbol/${symbol}/${year}_Q${quarter}/${symbol}_Q${quarter}_en.html`,
     symbol,
-    date
+    date,
+    quarter,
+    year,
+    finance_release_id
   );
 
   console.log(`🎉 [${symbol}] S3 업로드 및 OpenAI 분석 완료`);
-
 
   // S3 업로드 및 industry_analysis 업로드가 끝난 후 알림 전송
   await notifyEarningsSummaryUpload(symbol, date);
@@ -160,12 +162,11 @@ export async function fetchAndProcessEarningDoc({
 
   // 번역 파이프라인 수행
   try {
-    await runTranslatePipeline(symbol, date); // DeepL 번역 & S3 업로드 포함
+    await runTranslatePipeline(symbol, date, quarter, year, finance_release_id); // DeepL 번역 & S3 업로드 포함
     console.log(`🎉 [${symbol}] 번역 파이프라인 완료`);
   } catch (e) {
     console.error(`❌ [${symbol}] 번역 파이프라인 실패:`, e.message);
   }
-
 
   return true;
 }

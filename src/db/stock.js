@@ -89,11 +89,10 @@ export async function saveEarningsToDb(earnings) {
 
 // 오늘 실적
 export async function getTodayEarnings() {
-  // const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() and fin_period_date is not null`;
-  const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() - INTERVAL 1 DAY and fin_period_date is not null`;
+  const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() and fin_period_date is not null`;
+  // const query = `select stock_id, fin_release_date, fin_hour from stock_finances where fin_release_date = CURDATE() - INTERVAL 1 DAY and fin_period_date is not null`;
 
   // 어제를 나타냄, 한국 24일 09시라면, db에서 23일꺼 갖고옴
-
 
   try {
     const rows = await pool.query(query);
@@ -107,7 +106,6 @@ export async function getTodayEarnings() {
     return [];
   }
 }
-
 
 // 하루 전(D-1) 알림용: 내일 발표 예정 종목을 오늘 조회
 export async function getEarningsForPreAlarm() {
@@ -130,9 +128,10 @@ export async function getEarningsForPreAlarm() {
 export async function getSymbolByStockId(stock_id) {
   const query = "SELECT stock_symbol FROM stocks WHERE id = ?";
   const rows = await pool.query(query, [stock_id]);
-  console.log('rows:', rows);
+  console.log("rows:", rows);
   const row = rows[0];
   return row ? row.stock_symbol : null;
+}
 
 export async function getStockId(symbol) {
   const query = `select id from stocks where stock_symbol = ?`;
@@ -178,5 +177,72 @@ export async function updateStockFinances(
     console.error("updateStockFinances 에러:", err);
     return false;
   }
+}
 
+export async function getReleaseIdByStockIdAndDate(stockId, date) {
+  const query = `
+  SELECT id FROM stock_finances
+  WHERE stock_id = ? AND fin_release_date = CAST(? AS DATE)`;
+  const rows = await pool.query(query, [stockId, date]);
+  const row = rows[0];
+  return row ? row.id : null;
+}
+
+export async function insertReleaseContentEn(uuid, id, AWSLink) {
+  const query = `
+    INSERT INTO finance_releases (id, stock_finances_id, stock_release_content_en)
+    VALUES (?, ?, ?)
+  `;
+  try {
+    const result = await pool.query(query, [uuid, id, AWSLink]);
+    if (result.affectedRows > 0) {
+      console.log(`✅ stock_finances 업데이트 성공: ${id}`);
+      return true;
+    }
+    console.log(`⚠️ stock_finances 업데이트 실패: 해당 데이터가 없습니다.`);
+    return false;
+  } catch (err) {
+    console.error("insertReleaseContentEn 에러:", err);
+    return false;
+  }
+}
+
+export async function updateReleaseContentAn(id, AWSLink) {
+  const query = `
+    UPDATE finance_releases
+    SET stock_release_content_an = ?
+    WHERE stock_finances_id = ?
+  `;
+  try {
+    const result = await pool.query(query, [AWSLink, id]);
+    if (result.affectedRows > 0) {
+      console.log(`✅ stock_finances 업데이트 성공: ${id}`);
+      return true;
+    }
+    console.log(`⚠️ stock_finances 업데이트 실패: 해당 데이터가 없습니다.`);
+    return false;
+  } catch (err) {
+    console.error("updateReleaseContentAn 에러:", err);
+    return false;
+  }
+}
+
+export async function updateReleaseContentKr(id, AWSLink) {
+  const query = `
+    UPDATE finance_releases
+    SET stock_release_content_kr = ?
+    WHERE stock_finances_id = ?
+  `;
+  try {
+    const result = await pool.query(query, [AWSLink, id]);
+    if (result.affectedRows > 0) {
+      console.log(`✅ stock_finances 업데이트 성공: ${id}`);
+      return true;
+    }
+    console.log(`⚠️ stock_finances 업데이트 실패: 해당 데이터가 없습니다.`);
+    return false;
+  } catch (err) {
+    console.error("updateReleaseContentKr 에러:", err);
+    return false;
+  }
 }

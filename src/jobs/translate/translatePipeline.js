@@ -9,6 +9,8 @@ import { PositionBasedTranslationParser } from "./libs/parser.js";
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import s3 from "../../../config/s3Config.js";
 
+import { updateReleaseContentKr } from "../../db/stock.js";
+
 const API_KEY = process.env.DEEPL_API_KEY;
 const ENDPOINT = "https://api-free.deepl.com/v2/translate";
 const sourceLang = "EN";
@@ -22,8 +24,14 @@ function streamToBuffer(stream) {
   });
 }
 
-export async function downloadOriginalHtmlFromS3(symbol, date) {
-  const s3Key = `earnings/${symbol}/${date}.htm`;
+export async function downloadOriginalHtmlFromS3(
+  symbol,
+  date,
+  quarter,
+  year,
+  finance_release_id
+) {
+  const s3Key = `earnings_symbol/${symbol}/${year}_Q${quarter}/${symbol}_Q${quarter}_en.html`; // 원문
   const localPath = path.resolve(`data/raw/${symbol}-${date}.html`);
   fs.mkdirSync(path.dirname(localPath), { recursive: true });
 
@@ -56,7 +64,13 @@ export async function uploadTranslatedFileToS3(filePath, s3Key) {
   return url;
 }
 
-export async function runTranslatePipeline(symbol, date) {
+export async function runTranslatePipeline(
+  symbol,
+  date,
+  quarter,
+  year,
+  finance_release_id
+) {
   // const resolvedPath = path.resolve(process.cwd(), inputHtmlPath);
   //  const baseName = path.basename(inputHtmlPath, ".html");
 
@@ -64,7 +78,13 @@ export async function runTranslatePipeline(symbol, date) {
   const baseName = `${symbol}-${date}`;
 
   // === Step 1: 원본 HTML 읽기 ===
-  const inputPath = await downloadOriginalHtmlFromS3(symbol, date);
+  const inputPath = await downloadOriginalHtmlFromS3(
+    symbol,
+    date,
+    quarter,
+    year,
+    finance_release_id
+  );
   const raw = fs.readFileSync(inputPath, "utf8");
   // const raw = fs.readFileSync(resolvedPath, "utf8");
 
@@ -161,7 +181,10 @@ export async function runTranslatePipeline(symbol, date) {
   console.log(`🎉 최종 번역 완료: ${outputHtmlPath}`);
 
   // 8️⃣ S3 업로드
-  const s3Key = `earnings/translate/${symbol}/${date}.html`;
-  await uploadTranslatedFileToS3(outputHtmlPath, s3Key);
+  const s3Key = `earnings_symbol/${symbol}/${year}_Q${quarter}/${symbol}_Q${quarter}_ko.html`;
+  const AWSLink = await uploadTranslatedFileToS3(outputHtmlPath, s3Key);
+
+  await updateReleaseContentKr(finance_release_id, AWSLink);
+
   console.log(`✅ S3 업로드 완료: ${s3Key}`);
 }

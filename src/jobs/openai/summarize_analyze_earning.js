@@ -6,6 +6,8 @@ import * as cheerio from "cheerio";
 import { extractFontTextFromHtmlBuffer } from "./extractFontTextFromHtmlBuffer.js";
 import { OpenAI } from "openai";
 
+import { updateReleaseContentAn } from "../../db/stock.js";
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 function streamToBuffer(stream) {
@@ -180,7 +182,10 @@ export async function summarizeAndUploadEarningFile(
   id,
   originalS3Key,
   symbol,
-  date
+  date,
+  quarter,
+  year,
+  finance_release_id
 ) {
   try {
     const cleanS3Key = originalS3Key.split("#")[0];
@@ -188,8 +193,15 @@ export async function summarizeAndUploadEarningFile(
     const text = await extractTextFromFile(buffer, contentType);
     const title = `${id} FOMC 회의 요약`;
     const html = await generateHtmlSummary(title, text, symbol, date);
-    const htmlKey = `summaries/${symbol}/${date}.html`;
+    // 여기서 받아온 키값 쓰면 됨
+    const htmlKey = `earnings_symbol/${symbol}/${year}_Q${quarter}/${symbol}_Q${quarter}_sum.html`;
     const url = await uploadHtmlToS3(html, htmlKey);
+    // 실적발표 id 값을 계속 전달받아야될듯
+    await updateReleaseContentAn(finance_release_id, url); // stock_release_content_en 업데이트
+
+    // 여기서도 받아온 키값 쓰면됨
+    //upload return 값도 url 이므로, 이를 maria db 에 저장
+    // originalS3Key 는 본문이므로, stock_release_content_en 으로 저장
 
     const industryAnalysis = await generateIndustryAnalysis(text, date);
     const industryKey = `industry_analysis/${symbol}/${date}.json`;
