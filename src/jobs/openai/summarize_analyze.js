@@ -1,6 +1,10 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import s3 from "../../../config/s3Config.js"; // export default S3Client
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.node.mjs";
+// import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
+
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
+
+
 import {
   translateHtmlWithDeepL,
   wrapTranslatedHtmlWithStyle,
@@ -35,8 +39,20 @@ async function downloadFromS3(s3Key) {
 }
 
 async function extractTextFromPdf(buffer) {
+  const CMAP_URL = "../../node_modules/pdfjs-dist/cmaps/";
+  const CMAP_PACKED = true;
+  // Where the standard fonts are located.
+  const STANDARD_FONT_DATA_URL =
+      "../../node_modules/pdfjs-dist/standard_fonts/";
+
+
   const uint8Array = new Uint8Array(buffer); // ✅ 변환 필요
-  const loadingTask = pdfjsLib.getDocument({ data: uint8Array });
+  const loadingTask = pdfjsLib.getDocument({
+    data: uint8Array,
+    cMapUrl: CMAP_URL,
+    cMapPacked: CMAP_PACKED,
+    standardFontDataUrl: STANDARD_FONT_DATA_URL,});
+
   const pdf = await loadingTask.promise;
   let textContent = "";
 
@@ -94,7 +110,7 @@ ${fullText}
       {
         role: "system",
         content:
-          "You are an assistant that generates summarized FOMC meeting minutes in HTML format",
+            "You are an assistant that generates summarized FOMC meeting minutes in HTML format",
       },
       { role: "user", content: prompt },
     ],
@@ -169,7 +185,7 @@ ${fullText}`;
       {
         role: "system",
         content:
-          "You are an assistant that generates summarized FOMC meeting minutes in HTML format",
+            "You are an assistant that generates summarized FOMC meeting minutes in HTML format",
       },
       { role: "user", content: prompt },
     ],
@@ -193,10 +209,10 @@ async function uploadJsonToS3(data, s3Key) {
 
 // 전체 파이프라인
 export async function summarizeAndUploadFomcFile(
-  fomcId,
-  originalS3Key,
-  type,
-  date
+    fomcId,
+    originalS3Key,
+    type,
+    date
 ) {
   try {
     const { buffer, contentType } = await downloadFromS3(originalS3Key);

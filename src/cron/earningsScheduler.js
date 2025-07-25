@@ -15,7 +15,7 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 // 실적 발표 일정 조회 스케줄러 (미국 동부 0시 0분)
-cron.schedule("00 13 * * *", async () => {
+cron.schedule("00 16 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행 (미국 동부 0시 0분)");
 
   // 1. D-1 알림 (내일 실적 발표)
@@ -60,28 +60,28 @@ dayjs.extend(timezone);
 // [필수] 하루 전(D-1) 개별 알림
 async function notifyEarningsPreAlarm(date, stock_id, symbol) {
   console.log("notifyEarningsPreAlarm 호출됨", date, stock_id, symbol);
-  const urls = ["http://localhost:4000/api/notifications/earnings/prealarm"];
+  const urls = ["http://15.165.199.80/api/notifications/earnings/prealarm"];
   for (const url of urls) {
     try {
       console.log("알림 테스트 파라미터", { date, stock_id, symbol });
       await axios.post(
-        url,
-        { date, stock_id, symbol },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+          url,
+          { date, stock_id, symbol },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
       );
       console.log(`${url} 실적 하루 전 알림 요청 성공`);
     } catch (err) {
       if (err.response) {
         console.error(
-          `${url} 실적 하루 전 알림 요청 실패: [${err.response.status}] ${err.response.statusText}`
+            `${url} 실적 하루 전 알림 요청 실패: [${err.response.status}] ${err.response.statusText}`
         );
       } else if (err.request) {
         console.error(
-          `${url} 실적 하루 전 알림 요청 실패: No response from server`
+            `${url} 실적 하루 전 알림 요청 실패: No response from server`
         );
       } else {
         console.error(`${url} 실적 하루 전 알림 요청 실패:`, err.message);
@@ -119,28 +119,28 @@ export async function notifyEarningsSummaryUpload(symbol, date) {
     // console.log("파싱된 summary:", summary);
     const prediction = summary.prediction || "X";
     const msg = `[${symbol}] ${date}의 요약이 업로드되었습니다.\n\n요약 내용 => ${prediction}`;
-    const urls = ["http://localhost:4000/api/notifications/earnings/summary"];
+    const urls = ["http://15.165.199.80:4000/api/notifications/earnings/summary"];
     for (const url of urls) {
       try {
         // console.log("axios.post 직전", { symbol, date, msg });
         await axios.post(
-          url,
-          { symbol, date, message: msg },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+            url,
+            { symbol, date, message: msg },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
         );
         console.log(`${url} 실적 요약+업로드 알림 요청 성공`);
       } catch (err) {
         if (err.response) {
           console.error(
-            `${url} 실적 요약+업로드 알림 요청 실패: [${err.response.status}] ${err.response.statusText}`
+              `${url} 실적 요약+업로드 알림 요청 실패: [${err.response.status}] ${err.response.statusText}`
           );
         } else if (err.request) {
           console.error(
-            `${url} 실적 요약+업로드 알림 요청 실패: No response from server`
+              `${url} 실적 요약+업로드 알림 요청 실패: No response from server`
           );
         } else {
           console.error(`${url} 실적 요약+업로드 알림 요청 실패:`, err.message);
@@ -156,16 +156,16 @@ export async function notifyEarningsSummaryUpload(symbol, date) {
 export function runEarningsScheduler() {
   console.log("[runEarningsScheduler] 실행됨");
   const intervals = [
-    { label: "bmo", hours: [20, 21, 22, 23, 0] }, // BMO는 9시, 21시, 22시, 23시
+    { label: "bmo", hours: [19, 20, 21, 22, 23] }, // BMO는 9시, 21시, 22시, 23시
     { label: "amc", hours: [5, 6, 7, 8] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
   ];
 
   for (const { label, hours } of intervals) {
     for (const hour of hours) {
-      for (let m = 0; m < 60; m += 15) {
+      for (let m = 0; m < 60; m += 1) {
         cron.schedule(`${m} ${hour} * * *`, async () => {
           console.log(
-            `📅 [${label.toUpperCase()}] 스케줄러 실행 (${hour}:${m})`
+              `📅 [${label.toUpperCase()}] 스케줄러 실행 (${hour}:${m})`
           );
           // console.log(
           //   "[runEarningsScheduler] pollingSet:",
@@ -180,20 +180,20 @@ export function runEarningsScheduler() {
             // );
             if (!symbol) {
               console.error(
-                `[runEarningsScheduler] symbol이 없습니다! stock_id=${e}`
+                  `[runEarningsScheduler] symbol이 없습니다! stock_id=${e}`
               );
               continue; // 다음 루프로 넘어감
             }
             console.log(
-              `[runEarningsScheduler] getSymbolByStockId 결과: stock_id=${e}, symbol=${symbol}`
+                `[runEarningsScheduler] getSymbolByStockId 결과: stock_id=${e}, symbol=${symbol}`
             );
             const today = dayjs().format("YYYY-MM-DD");
             console.log(
-              `[runEarningsScheduler] runPollingJob 호출: stock_id=${e}, label=${label}`
+                `[runEarningsScheduler] runPollingJob 호출: stock_id=${e}, label=${label}`
             );
             const result = await runPollingJob(e, label);
             console.log(
-              `[runEarningsScheduler] runPollingJob 결과: stock_id=${e}, result=${result}`
+                `[runEarningsScheduler] runPollingJob 결과: stock_id=${e}, result=${result}`
             );
             if (result) {
               pollingSet.delete(e);
