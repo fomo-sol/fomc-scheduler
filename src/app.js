@@ -13,5 +13,5 @@ import "./cron/earningsScheduler.js"; // 실적 발표 일정 스케줄러 실�
 // import "./cron/weeklyScheduler.js"; // FOMC 문서 확인 스케줄러 실행
 // import "./cron/dailyMeetingScheduler.js"; // 매일 FOMC 문서 확인 스케줄러 실행
 
-// import { runMeetingScheduler } from "./cron/meetingScheduler.js";
-// runMeetingScheduler(); // FOMC 문서 확인 스케줄러 실행
+import { runMeetingScheduler } from "./cron/meetingScheduler.js";
+runMeetingScheduler(); // FOMC 문서 확인 스케줄러 실행

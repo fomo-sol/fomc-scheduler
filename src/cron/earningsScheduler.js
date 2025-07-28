@@ -15,7 +15,7 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 // 실적 발표 일정 조회 스케줄러 (미국 동부 0시 0분)
-cron.schedule("00 13 * * *", async () => {
+cron.schedule("13 16 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행 (미국 동부 0시 0분)");
 
   // 1. D-1 알림 (내일 실적 발표)
@@ -156,13 +156,13 @@ export async function notifyEarningsSummaryUpload(symbol, date) {
 export function runEarningsScheduler() {
   console.log("[runEarningsScheduler] 실행됨");
   const intervals = [
-    { label: "bmo", hours: [20, 21, 22, 23, 0] }, // BMO는 9시, 21시, 22시, 23시
-    { label: "amc", hours: [5, 6, 7, 8] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
+    { label: "bmo", hours: [18, 19, 20, 21, 22, 23, 0] }, // BMO는 9시, 21시, 22시, 23시
+    { label: "amc", hours: [18, 19, 20, 21, 5, 6, 7, 8] }, // AMC는 5시, 6시, 9시 요청을 보내는 것 AMC 일 경우, runPollingJob 함수에서 어제 날짜로 요청해야함 이 부분 넣어주기
   ];
 
   for (const { label, hours } of intervals) {
     for (const hour of hours) {
-      for (let m = 0; m < 60; m += 15) {
+      for (let m = 0; m < 60; m += 10) {
         cron.schedule(`${m} ${hour} * * *`, async () => {
           console.log(
             `📅 [${label.toUpperCase()}] 스케줄러 실행 (${hour}:${m})`
@@ -205,4 +205,3 @@ export function runEarningsScheduler() {
     }
   }
 }
-
