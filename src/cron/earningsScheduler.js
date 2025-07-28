@@ -15,6 +15,7 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 // 실적 발표 일정 조회 스케줄러 (미국 동부 0시 0분)
+
 cron.schedule("13 16 * * *", async () => {
   console.log("📅 매일 오후 1시에 실행 (미국 동부 0시 0분)");
 
@@ -60,7 +61,7 @@ dayjs.extend(timezone);
 // [필수] 하루 전(D-1) 개별 알림
 async function notifyEarningsPreAlarm(date, stock_id, symbol) {
   console.log("notifyEarningsPreAlarm 호출됨", date, stock_id, symbol);
-  const urls = ["http://localhost:4000/api/notifications/earnings/prealarm"];
+  const urls = ["http://15.165.199.80/api/notifications/earnings/prealarm"];
   for (const url of urls) {
     try {
       console.log("알림 테스트 파라미터", { date, stock_id, symbol });
@@ -119,7 +120,9 @@ export async function notifyEarningsSummaryUpload(symbol, date) {
     // console.log("파싱된 summary:", summary);
     const prediction = summary.prediction || "X";
     const msg = `[${symbol}] ${date}의 요약이 업로드되었습니다.\n\n요약 내용 => ${prediction}`;
-    const urls = ["http://localhost:4000/api/notifications/earnings/summary"];
+    const urls = [
+      "http://15.165.199.80:4000/api/notifications/earnings/summary",
+    ];
     for (const url of urls) {
       try {
         // console.log("axios.post 직전", { symbol, date, msg });

@@ -21,6 +21,7 @@
   "description": "",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.848.0",
+    "@napi-rs/canvas": "^0.1.74",
     "axios": "^1.10.0",
     "cheerio": "^1.1.0",
     "date-fns": "^4.1.0",
@@ -31,7 +32,6 @@
     "node-cron": "^4.2.1",
     "node-fetch": "^3.3.2",
     "openai": "^5.10.1",
-    "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^5.3.93"
   }
 }

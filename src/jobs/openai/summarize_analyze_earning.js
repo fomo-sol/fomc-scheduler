@@ -104,7 +104,7 @@ ${fullText}
       {
         role: "system",
         content:
-          "You are an assistant that generates summarized earning report in HTML format",
+            "You are an assistant that generates summarized earning report in HTML format",
       },
       { role: "user", content: prompt },
     ],
@@ -155,7 +155,7 @@ ${fullText}
       {
         role: "system",
         content:
-          "You are an assistant that generates summarized Earning Reports in HTML format",
+            "You are an assistant that generates summarized Earning Reports in HTML format",
       },
       { role: "user", content: prompt },
     ],
@@ -179,13 +179,13 @@ async function uploadJsonToS3(data, s3Key) {
 
 // 전체 파이프라인
 export async function summarizeAndUploadEarningFile(
-  id,
-  originalS3Key,
-  symbol,
-  date,
-  quarter,
-  year,
-  finance_release_id
+    id,
+    originalS3Key,
+    symbol,
+    date,
+    quarter,
+    year,
+    finance_release_id
 ) {
   try {
     const cleanS3Key = originalS3Key.split("#")[0];
